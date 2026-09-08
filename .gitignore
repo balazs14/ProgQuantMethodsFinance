@@ -1,0 +1,6 @@
+attic/
+build/
+*.synctex.gz
+.venv/
+*.pdf
+.DS_Store
