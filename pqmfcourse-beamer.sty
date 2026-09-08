@@ -1,0 +1,69 @@
+%% Shared preamble for Programming and Quantitative Methods in Finance Beamer presentations
+%% Adapted from SPM-PEM/spmcourse-beamer.sty (English localisation)
+
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb,bm,mathtools}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage[english]{babel}
+
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{itemize items}[circle]
+\setbeamercolor{structure}{fg=red!30!green!60!black}
+\setbeamercolor{item}{fg=red!30!green!60!black}
+\setbeamercolor{itemize item}{fg=red!30!green!60!black}
+
+\definecolor{slidebg0}{RGB}{255,255,255}
+\definecolor{slidebg1}{RGB}{220,220,220}
+\definecolor{slidebg2}{RGB}{220,235,255}
+\definecolor{slidebg3}{RGB}{220,255,230}
+\definecolor{slidebg4}{RGB}{255,235,210}
+\definecolor{slidebg5}{RGB}{235,220,255}
+\definecolor{slidebg6}{RGB}{255,220,205}
+
+\newcounter{slidebg}
+\setcounter{slidebg}{1}
+\newcommand{\alternateslidebg}{
+  \ifnum\value{slidebg}=1
+    \setbeamercolor{background canvas}{bg=slidebg1}\setcounter{slidebg}{2}
+  \else\ifnum\value{slidebg}=2
+    \setbeamercolor{background canvas}{bg=slidebg2}\setcounter{slidebg}{3}
+  \else\ifnum\value{slidebg}=3
+    \setbeamercolor{background canvas}{bg=slidebg3}\setcounter{slidebg}{4}
+  \else\ifnum\value{slidebg}=4
+    \setbeamercolor{background canvas}{bg=slidebg4}\setcounter{slidebg}{5}
+  \else\ifnum\value{slidebg}=5
+    \setbeamercolor{background canvas}{bg=slidebg5}\setcounter{slidebg}{6}
+  \else
+    \setbeamercolor{background canvas}{bg=slidebg6}\setcounter{slidebg}{1}
+  \fi\fi\fi\fi\fi
+}
+
+\ExplSyntaxOn
+\NewExpandableDocumentCommand{\tocsectionbg}{m}
+  { slidebg\int_eval:n { \int_mod:nn { #1 } { 6 } + 1 } }
+\ExplSyntaxOff
+
+\setbeamertemplate{section in toc}{%
+  \setbeamercolor{section in toc}{fg=black,bg=\tocsectionbg{\inserttocsectionnumber}}%
+  \begin{beamercolorbox}[wd=\textwidth,sep=0.7ex,leftskip=1em,rightskip=1em]{section in toc}
+    \inserttocsectionnumber.\enspace\inserttocsection
+  \end{beamercolorbox}%
+  \vspace{0.3ex}%
+}
+\newcommand{\newsection}[1]{\begin{frame}[plain]
+\centering\vfill
+{\usebeamercolor[fg]{structure}\LARGE\bfseries \insertsectionnumber\ #1}
+\vfill\end{frame}}
+\NewDocumentCommand{\bgsection}{s m}{%
+  \alternateslidebg
+  \section{#2}%
+  \IfBooleanF{#1}{\newsection{#2}}%
+}
+\newcommand{\titleandoutline}{
+  \alternateslidebg
+  \frame{\titlepage}
+  \begin{frame}{Outline}
+  \tableofcontents[hideallsubsections]
+  \end{frame}
+}

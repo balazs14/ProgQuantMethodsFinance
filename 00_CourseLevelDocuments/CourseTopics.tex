@@ -1,0 +1,690 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{needspace}
+\setlength{\emergencystretch}{2em}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=blue!60!black]{hyperref}
+
+\definecolor{coursegreen}{rgb}{0.15,0.42,0.22}
+\definecolor{exgrey}{rgb}{0.30,0.30,0.34}
+
+\titleformat{\section}{\large\bfseries\color{coursegreen}}{\thesection}{0.6em}{}
+
+%% \lesson{folder}{title}{source pages}
+\newcommand{\lesson}[3]{%
+  \needspace{5\baselineskip}%
+  \item \textbf{\large #2}\hfill\texttt{\small #1}\\[0.15em]
+  {\small\itshape\color{coursegreen} python\_psz source: #3}%
+}
+
+%% level-3 heading that introduces the exercise list
+\newcommand{\exhead}[1]{\item \textbf{Review questions and exercises}%
+  \hfill{\small\itshape\color{exgrey} #1}}
+
+\newenvironment{exlist}
+  {\begin{enumerate}[label=\arabic*., leftmargin=2.0em, topsep=0.3em,
+                     itemsep=0.14em, parsep=0pt, before=\small\color{exgrey}]}
+  {\end{enumerate}}
+
+\setlist[enumerate,1]{label=\textbf{\arabic*.}, leftmargin=2.1em, itemsep=1.1em}
+\setlist[itemize,1]{label=\textbullet, leftmargin=1.3em, topsep=0.45em, itemsep=0.28em}
+\setlist[itemize,2]{label=--, leftmargin=1.3em, topsep=0.2em, itemsep=0.1em}
+\setlist[itemize,3]{label=$\cdot$, leftmargin=1.2em, topsep=0.15em, itemsep=0.06em}
+
+\title{\textbf{Programming and Quantitative Methods in Finance}\\[0.4em]
+       \large Course Topics and Source Exercises}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-2.2em}
+
+\noindent
+An introductory Python course for finance masters students:
+\textbf{12 lessons of 90 minutes}, taught in English. The course follows the
+\emph{python\_psz} (``Programoz\'as alapjai'') materials, adapted to a
+quantitative-finance setting. The numbered list mirrors the repository folder
+structure one-to-one.
+
+\medskip
+\noindent
+New material is taught in \textbf{Lessons 1--10}; \textbf{Lesson 11} is practice
+plus a mock exam and \textbf{Lesson 12} is the exam itself.
+
+\medskip
+\noindent
+Four levels are shown: \textbf{lesson} $\rightarrow$ \textbf{topic (source page)}
+$\rightarrow$ \textbf{subtopic} $\rightarrow$ \textbf{the exercises set by the
+source course}. The exercises are translated from the Hungarian original and are
+reproduced \emph{as the source sets them}; they are the raw material to be recast
+into finance word problems when the slides are written.
+
+\medskip
+\noindent
+\textbf{Excluded.} Sorting algorithms (the mirror has four: bubble, insertion, heap,
+merge), search algorithms (linear and binary) and \texttt{numpy} are deliberately
+not covered.
+
+\section*{Course-level documents \hfill \texttt{\small 00\_CourseLevelDocuments}}
+\begin{itemize}
+  \item This topic list (\texttt{CourseTopics.tex})
+  \item Course syllabus and administrative information
+  \item Shared handouts and reference sheets
+\end{itemize}
+
+\section*{Lessons}
+
+\begin{enumerate}
+
+%% ------------------------------------------------------------------ L1
+\lesson{01\_SetupAndBasics}{Setup and Basics}{introduction, installation (+ python, vscode, environment), ipynb, general}
+\begin{itemize}
+  \item \textbf{Course information} \hfill{\small\itshape introduction}
+    \begin{itemize}
+      \item Structure of the classes and schedule
+      \item Attendance requirements
+      \item Assessment and grading
+      \item Course materials
+    \end{itemize}
+  \item \textbf{Installing the development environment} \hfill{\small\itshape installation}
+        \emph{(approx.\ half of this class)}
+    \begin{itemize}
+      \item Installing Python
+        \begin{itemize}
+          \item From \texttt{python.org}
+          \item Via Anaconda
+        \end{itemize}
+      \item Installing Visual Studio Code for Python
+      \item Development environments compared
+        \begin{itemize}
+          \item Visual Studio Code
+          \item Jupyter
+          \item PyCharm
+          \item Online code editors
+        \end{itemize}
+    \end{itemize}
+  \item \textbf{Jupyter notebooks} \hfill{\small\itshape ipynb}
+    \begin{itemize}
+      \item The \texttt{.ipynb} file type
+      \item Code cells and markdown cells
+      \item Running cells; the kernel
+    \end{itemize}
+  \item \textbf{Programming basics} \hfill{\small\itshape general}
+    \begin{itemize}
+      \item Machine code and programming languages
+      \item Syntax, assembly, implementation
+      \item Algorithms and sequences
+      \item What Python is; running a first program
+    \end{itemize}
+  \item[] {\small\itshape\color{exgrey} The source sets no exercises for these pages.}
+\end{itemize}
+
+%% ------------------------------------------------------------------ L2
+\lesson{02\_VariablesAndStrings}{Variables and Strings}{variables, variables\_text}
+\begin{itemize}
+  \item \textbf{Variables} \hfill{\small\itshape variables}
+    \begin{itemize}
+      \item Python variables
+      \item Variable names
+      \item Variable naming conventions
+      \item The built-in data types of Python
+    \end{itemize}
+  \item \textbf{Strings} \hfill{\small\itshape variables\_text}
+    \begin{itemize}
+      \item Characters
+        \begin{itemize}
+          \item Searching for a substring
+          \item Slicing
+        \end{itemize}
+      \item String functions
+      \item Formatted output
+        \begin{itemize}
+          \item \texttt{str.format()}
+          \item f-string
+          \item Format parameters
+          \item Escape characters
+        \end{itemize}
+      \exhead{10 tasks}
+      \begin{exlist}
+        \item Given a two-line verse as a single string, modify it so that
+              \texttt{print} puts the two lines on separate lines.
+        \item What does the \texttt{r} prefix before a string literal mean?
+        \item Which type is suitable in Python for storing a single character?
+        \item Store your surname and given name in two separate variables, all
+              lowercase, then print your full name with a single \texttt{print}.
+        \item Write a program that swaps the two words of a string containing two
+              words separated by a single space.
+        \item Write a program that reverses a string, e.g.\ \texttt{ABC}
+              $\rightarrow$ \texttt{CBA}. Hint: the step of a slice may be negative.
+        \item Write a program that upper-cases the first word of a two-word name,
+              e.g.\ \texttt{Gipsz Jakab} $\rightarrow$ \texttt{GIPSZ Jakab}.
+        \item Write a program that extracts the initials from a two-word name,
+              e.g.\ \texttt{Gipsz Jakab} $\rightarrow$ \texttt{GJ}.
+        \item Write a program that fixes the capitalisation of a lowercase two-word
+              name, e.g.\ \texttt{nemecsek erno} $\rightarrow$ \texttt{Nemecsek Erno}.
+              Try it also \emph{without} the dedicated function.
+        \item Write a program that strips spaces from both ends of a string and then
+              prints the length of the result, in as few lines as possible. Try it
+              also without the dedicated function.
+      \end{exlist}
+    \end{itemize}
+\end{itemize}
+
+%% ------------------------------------------------------------------ L3
+\lesson{03\_NumbersAndTypes}{Numbers and Types}{variables\_numeric, type\_conversion, variables\_bool}
+\begin{itemize}
+  \item \textbf{Numeric types} \hfill{\small\itshape variables\_numeric}
+    \begin{itemize}
+      \item \texttt{int} -- integers
+      \item \texttt{float} -- floating-point numbers
+      \item Operations
+      \exhead{7 tasks}
+      \begin{exlist}
+        \item Compute and display what HUF 20{,}000 is worth in euros and dollars
+              (EUR rate 352.5, USD rate 295.5). Use variables for the calculation,
+              and round the result to whole numbers.
+        \item Solve the linear equation $ax+b=0$ and display the solution to two
+              decimal places, with $a=3$, $b=1$. Print it as
+              ``The solution of the equation: \{value\}''.
+        \item Compute and display the volume and surface area of a cuboid with edges
+              $a=3$, $b=4$, $c=5$, where $V=abc$ and $A=2(ab+ac+bc)$. Present the
+              answer neatly on one line.
+        \item Compute the circumference of a circle of radius 8 and print it
+              formatted to two decimal places.
+        \item Compute the tenth power of 9.
+        \item Compute the remainder, and separately the integer quotient, of two
+              given numbers.
+        \item Compute the hypotenuse of a right triangle from its two legs.
+              Hint: use the exponentiation operator.
+      \end{exlist}
+    \end{itemize}
+  \item \textbf{Type conversion} \hfill{\small\itshape type\_conversion}
+    \begin{itemize}
+      \item \texttt{int()}, \texttt{float()}, \texttt{str()}, \texttt{complex()}
+      \item Implicit versus explicit conversion
+      \item Conversion errors
+    \end{itemize}
+  \item \textbf{The boolean type} \hfill{\small\itshape variables\_bool}
+    \begin{itemize}
+      \item Comparison operators
+      \item Logical operators
+      \item Truthiness gotchas, e.g.\ \texttt{bool("False")} is \texttt{True}
+      \exhead{5 tasks}
+      \begin{exlist}
+        \item Read two values from the user and check whether they are equal.
+        \item Read three strings from the user and report whether all three are
+              identical, or whether any two are identical. Use compound boolean
+              expressions.
+        \item What is the value of each of the following?
+              \texttt{not(True and True)}, \texttt{True or False},
+              \texttt{not(False and True)}, \texttt{False and False}
+        \item Read a year from the user and report whether it is a leap year. Check
+              that the value really is a number and four characters long. Evaluate it
+              with a compound boolean expression.
+        \item Implement exclusive-or: read the positions of two two-way light
+              switches (accept only two values, e.g.\ 0/1 or yes/no, re-prompting on
+              anything else), then report whether the light is on. Make the
+              expression as concise as you can.
+      \end{exlist}
+    \end{itemize}
+\end{itemize}
+
+%% ------------------------------------------------------------------ L4
+\lesson{04\_InputAndConditionals}{Input and Conditionals}{input, if\_statement}
+\begin{itemize}
+  \item \textbf{Input} \hfill{\small\itshape input}
+    \begin{itemize}
+      \item The \texttt{input()} function
+      \item Converting the input
+      \exhead{5 tasks}
+      \begin{exlist}
+        \item Read the user's name and greet them by their full name.
+        \item Read the user's name and greet them by their given name only.
+        \item Read the radius of a circle and print its area. Ignore the case where
+              the input cannot be converted to a number.
+        \item Read a floating-point number and print it converted to an integer.
+        \item Read a string and print it reversed.
+      \end{exlist}
+    \end{itemize}
+  \item \textbf{Conditional branching} \hfill{\small\itshape if\_statement}
+    \begin{itemize}
+      \item \texttt{if}
+      \item \texttt{else}
+      \item \texttt{elif}
+      \item \texttt{pass}
+      \item Validating the input
+      \exhead{9 tasks}
+      \begin{exlist}
+        \item Read a non-zero integer and print its sign (Positive or Negative).
+        \item Read two distinct real numbers and print the larger.
+        \item Read three integers and print the largest. They need not be distinct.
+        \item Read the user's name and age. Under 20, greet them informally by given
+              name; over 20, formally by full name.
+        \item Read the radius of a circle and print its area. If the value is not a
+              number, report that the input was invalid.
+        \item Read a number. If it converts, report whether it is zero, even or odd;
+              otherwise report an invalid value.
+        \item Read a temperature and whether it is on the Celsius or Fahrenheit
+              scale (C/F), then print the value on the opposite scale. Report
+              invalid input (non-numeric, or neither C nor F).
+        \item Read a string and check whether it is written entirely in lowercase.
+              Print the result.
+        \item Read an age and print Young (0--39), Middle-aged (40--64) or Old
+              (65+).
+      \end{exlist}
+    \end{itemize}
+\end{itemize}
+
+%% ------------------------------------------------------------------ L5
+\lesson{05\_SequencesAndLists}{Sequences and Lists}{sequence\_types (hub page), range, tuple, list}
+\begin{itemize}
+  \item \textbf{Sequence types} \hfill{\small\itshape sequence\_types}
+    \begin{itemize}
+      \item The sequence concept
+      \item Indexing and slicing
+      \item Mutable versus immutable sequences
+    \end{itemize}
+  \item \textbf{Range} \hfill{\small\itshape range}
+    \begin{itemize}
+      \item Creating a range
+      \item Range operations
+    \end{itemize}
+  \item \textbf{Tuple} \hfill{\small\itshape tuple}
+    \begin{itemize}
+      \item Creating a tuple
+      \item Type conversion
+      \item \texttt{sorted}
+    \end{itemize}
+  \item \textbf{Lists} \hfill{\small\itshape list}
+    \begin{itemize}
+      \item Creating lists
+      \item Immutable operations
+        \begin{itemize}
+          \item Accessing list elements
+          \item Number of elements
+          \item Concatenating lists
+          \item Searching in a list
+          \item Testing list membership
+        \end{itemize}
+      \item Mutable operations
+        \begin{itemize}
+          \item Modifying list elements
+          \item Inserting a new element
+          \item Deleting an element
+          \item Sorting lists
+        \end{itemize}
+      \exhead{8 tasks, on one shared fruit list}
+      \begin{exlist}
+        \item Print the number of elements in the list.
+        \item Print its last element.
+        \item Print its first three elements.
+        \item Append ``gooseberry'' to the end of the list.
+        \item Insert ``pineapple'' at the front of the list.
+        \item Delete ``banana'' from the list. First find its position, then delete.
+        \item Print the elements of the list in reverse order.
+        \item What happens if you try to assign to an index that does not yet exist?
+      \end{exlist}
+    \end{itemize}
+\end{itemize}
+
+%% ------------------------------------------------------------------ L6
+\lesson{06\_Loops}{Loops}{loops}
+\begin{itemize}
+  \item \textbf{Loops} \hfill{\small\itshape loops}
+    \begin{itemize}
+      \item The \texttt{for} loop
+      \item The \texttt{while} loop
+      \item \texttt{break} and \texttt{continue}
+      \item Continuous data entry
+      \exhead{10 tasks}
+      \begin{exlist}
+        \item Modify the ``continuous data entry'' example so that typing
+              \texttt{quit} exits the program.
+        \item Produce a function table showing the numbers 1 to 10 with their
+              squares and cubes, laid out in three columns.
+        \item Read a student's grades until 0 is entered, then compute and display
+              the average. If 0 is entered immediately, display
+              ``No grades recorded''.
+        \item Read an integer repeatedly until it lies between 1 and 90 inclusive,
+              re-prompting on an invalid value. Count and display the number of
+              attempts. After more than 5 wrong attempts print ``No attempts
+              left!''; on success within 5 attempts print ``Data entry successful!''.
+        \item Read a string and print it reversed \emph{using a loop} --- do not use
+              colon slice indexing.
+        \item Read numbers until the user enters 42. They have 5 attempts; on
+              failure print a regret message, on success print ``Congratulations''.
+        \item Read two numbers and ask the user for their product. Allow 3 attempts,
+              then print the answer. On a correct guess print ``good solution'' and
+              exit. Assume integer input.
+        \item Read a number $n$ and print the first $n$ Fibonacci numbers.
+        \item Read a number and compute its factorial with a loop, then print it.
+        \item Print the first 100 terms of the sequence $a_n = (1+1/n)^n$.
+      \end{exlist}
+    \end{itemize}
+\end{itemize}
+
+%% ------------------------------------------------------------------ L7
+\lesson{07\_FunctionsAndModules}{Functions and Modules}{function (+ function\_args), module, math, help}
+\begin{itemize}
+  \item \textbf{Functions} \hfill{\small\itshape function}
+    \begin{itemize}
+      \item Defining a function
+      \item Parameters and arguments
+        \begin{itemize}
+          \item Default values
+          \item An unlimited number of parameters \emph{(own sub-page:
+                \texttt{function\_args})}
+        \end{itemize}
+      \item Return values
+      \item Handling variables; scope
+      \item Recursive functions
+      \exhead{6 tasks}
+      \begin{exlist}
+        \item Write a function that determines how many uppercase letters a string
+              contains. The \texttt{isupper} method may be used.
+        \item Write a function that reverses a given string.
+        \item Write a function that determines whether its input is a palindrome.
+        \item Write a function that determines whether its input is a pangram.
+              (You must list the alphabet in the code yourself --- the source uses
+              the Hungarian alphabet.)
+        \item Write a function that computes the harmonic mean of the numbers in a
+              list. Handle potentially invalid input too.
+        \item Write a function that finds the greatest common divisor of two numbers
+              using the Euclidean algorithm.
+      \end{exlist}
+    \end{itemize}
+  \item \textbf{Modules and packages} \hfill{\small\itshape module}
+    \begin{itemize}
+      \item Importing a module --- the \texttt{import} keyword
+        \begin{itemize}
+          \item Import examples
+          \item Importing all names
+        \end{itemize}
+      \item[] {\small\itshape\color{exgrey} No exercises set on this page.}
+    \end{itemize}
+  \item \textbf{The \texttt{math} module} \hfill{\small\itshape math}
+        \emph{(a worked example of a standard-library module)}
+    \begin{itemize}
+      \item Constants
+      \item Trigonometric functions
+      \item Combinatorial functions
+      \item Other functions
+      \item \texttt{random}
+      \exhead{2 tasks}
+      \begin{exlist}
+        \item Write a function that takes the two legs of a right triangle and
+              returns, in a list, the length of the hypotenuse and the sizes of the
+              other two angles.
+        \item Write a function whose input is a list of integers of arbitrary
+              length. It sorts the list ascending, generates a random number between
+              0 and 1, and returns the list up to the percentile given by one
+              hundred times that number. Example: input
+              \texttt{[1,2,3,4,5,6,7,8,9,10]} with random number 0.33 returns
+              \texttt{[1,2,3,4]}.
+      \end{exlist}
+    \end{itemize}
+  \item \textbf{Getting help} \hfill{\small\itshape help}
+    \begin{itemize}
+      \item \texttt{help()}
+      \item \texttt{\_\_doc\_\_}
+      \item \texttt{dir()}
+    \end{itemize}
+\end{itemize}
+
+%% ------------------------------------------------------------------ L8
+\lesson{08\_PandasI}{Pandas I}{datetime, pandas (first half)}
+\begin{itemize}
+  \item \textbf{Dates --- short primer} \hfill{\small\itshape datetime}
+        \emph{(prerequisite for pandas date handling)}
+    \begin{itemize}
+      \item \texttt{date}
+      \item \texttt{time}
+      \item \texttt{datetime}
+      \item Timestamp
+      \item \texttt{timedelta}
+      \item[] {\small\itshape\color{exgrey} No exercises set on this page
+            (but see the practice sheet in Lesson 11).}
+    \end{itemize}
+  \item \textbf{Data structures} \hfill{\small\itshape pandas}
+    \begin{itemize}
+      \item Series
+      \item DataFrame
+    \end{itemize}
+  \item \textbf{File operations}
+    \begin{itemize}
+      \item Creating a DataFrame from a file
+      \item Writing a DataFrame to a file
+    \end{itemize}
+  \item \textbf{DataFrame operations}
+    \begin{itemize}
+      \item Basic descriptive operations
+      \item Sorting a DataFrame
+    \end{itemize}
+  \item \textbf{Rows / records}
+    \begin{itemize}
+      \item Adding rows
+      \item Deleting rows
+    \end{itemize}
+  \item \textbf{Columns / data series}
+    \begin{itemize}
+      \item Adding columns
+      \item Deleting columns
+      \item Operations on columns
+    \end{itemize}
+  \exhead{5 tasks on \texttt{szeged.csv}}
+  \begin{exlist}
+    \item Read \texttt{szeged.csv}. Inspect the first few rows and the size of the
+          whole dataset; print the descriptive statistics and the correlation
+          between the columns.
+    \item Delete the \texttt{Loud Cover} and \texttt{Daily Summary} columns. Rename
+          the remaining columns so that each is lowercase with words separated by
+          underscores.
+    \item Find the day on which visibility was greatest. What was the average
+          humidity? On which day was the difference between temperature and
+          apparent temperature largest?
+    \item How many rows are there where it snowed, the description indicates fog,
+          and either visibility was between 0 and 20 metres, or visibility was above
+          3.2 km but humidity below 0.9?
+    \item Display the average temperature by precipitation type
+          (\texttt{Precip Type}).
+  \end{exlist}
+\end{itemize}
+
+%% ------------------------------------------------------------------ L9
+\lesson{09\_PandasII}{Pandas II}{pandas (second half)}
+\begin{itemize}
+  \item \textbf{Selecting values by condition} \hfill{\small\itshape pandas}
+    \begin{itemize}
+      \item Listing empty (missing) values
+    \end{itemize}
+  \item \textbf{Group by}
+    \begin{itemize}
+      \item Grouping and aggregation
+    \end{itemize}
+  \item \textbf{Data-type-specific functions}
+    \begin{itemize}
+      \item Date type
+      \item Text type
+      \item Numeric type
+      \item Categorical type
+    \end{itemize}
+  \exhead{13 tasks on \texttt{olimpia.csv}}
+  \begin{exlist}
+    \item Find which event the 3 oldest Olympians competed in, and how old they were.
+    \item Find which event the 3 heaviest Olympians competed in, and their weight in kg.
+    \item Find the 10 countries with the most participants in the history of the
+          Olympics (someone who attended three times counts three times).
+    \item \emph{Hard:} find the 10 countries with the most Olympians, counting each
+          person only once.
+    \item Find the 10 countries with the most medals, regardless of colour.
+    \item \emph{Hard:} among the athletes of the 10 countries with the most medals,
+          find those who were over 60 at one of their Olympics.
+    \item Which country had the youngest Olympians on average? And the heaviest?
+    \item How do the average age and weight of non-medallists, gold, silver and
+          bronze medallists compare?
+    \item Collect the list of discontinued Olympic sports and the last year each
+          appeared.
+    \item How many Hungarian gold medals were won?
+    \item Print the details of the oldest participant.
+    \item Collect which sport first appeared at which Olympics.
+    \item Count the total number of entrants per country across the Olympics.
+  \end{exlist}
+  \exhead{5 tasks on \texttt{covid.csv}}
+  \begin{exlist}
+    \item Print how many daily records the table holds for each country
+          (\texttt{value\_counts}).
+    \item For each day, compute and store in a new column the share of fully
+          vaccinated people among the vaccinated, i.e.\
+          \texttt{people\_fully\_vaccinated} over \texttt{people\_vaccinated}.
+    \item Filter the dataset to the Hungarian records and save this into a new
+          DataFrame.
+    \item For the Hungarian data, print the observed period (first and last date).
+    \item How many Hungarian fatalities were there in total over the observed period?
+  \end{exlist}
+\end{itemize}
+
+%% ------------------------------------------------------------------ L10
+\lesson{10\_DataVisualization}{Data Visualization}{plotly}
+\begin{itemize}
+  \item \textbf{Plotly} \hfill{\small\itshape plotly}
+    \begin{itemize}
+      \item Chart types
+        \begin{itemize}
+          \item Loading the data
+          \item Line chart
+          \item Bar chart
+          \item Histogram
+          \item Scatter and bubble chart
+          \item 3D scatter plot
+          \item Pie chart
+          \item Box plot
+        \end{itemize}
+      \item Animation
+      \exhead{6 tasks on \texttt{szeged.csv}}
+      \begin{exlist}
+        \item Load \texttt{szeged.csv}. Format the \texttt{Formatted Date} column:
+              trim the microseconds and time zone from the end of the text, then
+              convert the remainder to a date type.
+        \item Draw a line chart of the temperature observed on 4 April 2016.
+        \item Draw a scatter plot of all December temperatures. Hovering should show
+              the exact timestamp. From the chart, read off exactly when it was
+              coldest and warmest in the period.
+        \item Filter to cases where wind exceeded 40. Draw a 3D scatter plot with
+              visibility on $x$, wind speed on $y$ and temperature on $z$. From it,
+              say when wind was highest, when temperature was highest, and which
+              snowy timestamp had the lowest visibility.
+        \item Create a new column holding the difference between actual and apparent
+              temperature, named \texttt{Temp Diff}. Filter to 2010 and to
+              \texttt{Temp Diff} above 1. Plot \texttt{Temp Diff} on $x$ against wind
+              speed on $y$.
+        \item Modify the previous task so that all years are shown rather than just
+              2010, animated year by year.
+      \end{exlist}
+    \end{itemize}
+\end{itemize}
+
+%% ------------------------------------------------------------------ L11
+\lesson{11\_PracticeAndMockExam}{Practice and Mock Exam}{practice (+ mintazh1/2 as models)}
+{\small\itshape\color{exgrey} No new material --- the whole class is revision
+followed by a full-length mock exam.}
+\begin{itemize}
+  \item \textbf{Practice sheet} \hfill{\small\itshape practice}
+    \begin{itemize}
+      \item Modules --- \texttt{math} \emph{(4 tasks)}
+        \begin{itemize}
+          \item Function computing a sphere's volume and surface area from its
+                radius, using \texttt{math.pi} and \texttt{math.pow}.
+          \item Function taking a triangle's three side lengths and returning, in a
+                list, its area (Heron's formula) and its angles (law of cosines),
+                using \texttt{math.sqrt}, \texttt{math.acos}, \texttt{math.degrees}.
+          \item Function computing the ratio between the area of a circle and of the
+                rectangle circumscribing it, given the radius.
+          \item Read a radius from the user, convert to float, then compute and print
+                the circle's area and circumference and the sphere's surface area and
+                volume, each rounded to two decimals.
+        \end{itemize}
+      \item Modules --- \texttt{datetime} \emph{(5 tasks)}
+        \begin{itemize}
+          \item Function taking a year and a month and returning a list of every day
+                in that month, using \texttt{date} and \texttt{timedelta}.
+          \item Function checking whether a given time falls within working hours
+                (9:00--17:00), using the \texttt{time} class.
+          \item Function taking an integer and computing the date that many days from
+                today, using \texttt{datetime} and \texttt{timedelta}.
+          \item Function formatting a given date in several styles
+                (\texttt{YYYY-MM-DD}, \texttt{DD/MM/YYYY}, etc.).
+          \item Function taking a year and a month and computing the number of
+                weekend days in that month.
+        \end{itemize}
+      \item Modules --- \texttt{pandas} \emph{(2 tasks)}
+        \begin{itemize}
+          \item Function taking a DataFrame and filling missing values: numeric
+                columns with the column mean, non-numeric
+                (\texttt{dtype=='object'}) columns with the most frequent value.
+                Then read \texttt{olimpia.csv}, call it, and verify the gaps are
+                filled.
+          \item Read \texttt{olimpia.csv}, drop athletes with no \texttt{Height},
+                then compute mean height by sex and print it formatted to two
+                decimals.
+        \end{itemize}
+      \item Modules --- \texttt{plotly} \emph{(3 tasks)}
+        \begin{itemize}
+          \item Bar chart of the number of gold medals by country, descending.
+          \item Pie chart of the proportion of gold, silver and bronze medals.
+          \item Count entrants by country and year, then a scatter plot with years
+                on the horizontal axis and entrant counts on the vertical; hovering
+                over a point shows the country code (\texttt{NOC}).
+        \end{itemize}
+      \item Composite tasks \emph{(3 tasks)}
+        \begin{itemize}
+          \item Save the pandas package's objects (\texttt{dir}) into a variable and
+                build a \texttt{Series} from it. Lowercase the elements, keep the
+                first three characters of each, sort alphabetically, drop those
+                beginning with an underscore, then draw a histogram of how often
+                each occurs.
+          \item Read \texttt{covid.csv}; convert \texttt{date} to a date type;
+                divide \texttt{ratio} by 100 to get values between 0 and 1; create a
+                \texttt{full\_ratio} column giving fully vaccinated people as a
+                share of population. Build a per-country DataFrame holding each
+                country's latest record, then a scatter plot of \texttt{ratio}
+                against \texttt{full\_ratio}, with the country readable on hover.
+          \item Save the \texttt{plotly.express} stocks sample
+                (\texttt{px.data.stocks()}). Convert \texttt{date} to a date type and
+                draw a line chart of the Apple share price (\texttt{AAPL}). Add a
+                \texttt{month} column holding year and month separated by a hyphen,
+                then draw a box plot of the Apple prices by month. Finally compute
+                the monthly mean price and show it as a bar chart, in chronological
+                order. \emph{(Finance-shaped --- the natural spine for the mock
+                exam.)}
+        \end{itemize}
+    \end{itemize}
+  \item \textbf{Mock exam}
+    \begin{itemize}
+      \item Full-length mock exam paper covering the whole course, modelled on the
+            sample midterms ZH1 and ZH2
+      \item Complete worked solutions
+    \end{itemize}
+\end{itemize}
+
+%% ------------------------------------------------------------------ L12
+\lesson{12\_Exam}{Exam}{mintazh1 (ZH1), mintazh2 (ZH2)}
+\begin{itemize}
+  \item \textbf{The in-class exam}
+    \begin{itemize}
+      \item Exam paper
+      \item Solutions
+      \item Format and difficulty modelled on the sample midterms ZH1 and ZH2
+      \item Covers only material from Lessons 1--11
+    \end{itemize}
+\end{itemize}
+
+\end{enumerate}
+
+\end{document}
