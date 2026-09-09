@@ -1,0 +1,211 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\input{../pqmfcourse-beamer.sty}
+
+\title{A programozás alapjai}
+\subtitle{1. hét: Alapok, változók, karakterláncok}
+\author{}
+\date{}
+
+\begin{document}
+\titleandoutline
+
+\bgsection{Alapok}
+
+\begin{frame}{Órai terv}
+  \begin{itemize}
+    \item Környezetellenőrzés: Python, VS Code, Jupyter.
+    \item Hello World.
+    \item Program: bemenet $\rightarrow$ feldolgozás $\rightarrow$ kimenet.
+    \item Változók és adattípusok.
+    \item Karakterláncok és műveleteik.
+    \item Feladatmegoldás: 5., 7., 9. feladat kiemelten.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Python-környezet}
+  \begin{itemize}
+    \item Python 3: \url{https://www.python.org/}
+    \item Verzióellenőrzés: \texttt{python3 --version}
+    \item VS Code + Microsoft Python bővítmény.
+    \item Jupyter bővítmény notebookokhoz.
+    \item Virtuális környezet:
+  \end{itemize}
+  \begin{block}{macOS / Linux}
+    \texttt{python3 -m venv .venv}\\
+    \texttt{source .venv/bin/activate}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Hello World}
+  \begin{block}{hello.py}
+\begin{verbatim}
+print("Hello World!")
+\end{verbatim}
+  \end{block}
+  \begin{itemize}
+    \item Fájl: \texttt{hello.py}
+    \item VS Code: ``Run Python File in Terminal''
+    \item Terminál: \texttt{python3 hello.py}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Megjegyzés és sortörés}
+  \begin{block}{Megjegyzés}
+\begin{verbatim}
+# Ez egy megjegyzés
+print("Hello World!")  # kimenet
+\end{verbatim}
+  \end{block}
+  \begin{block}{Sortörés a forrásban}
+\begin{verbatim}
+print( \
+      "Hello World!" \
+     )
+\end{verbatim}
+  \end{block}
+\end{frame}
+
+\bgsection{Változók}
+
+\begin{frame}[fragile]{Változók és típusok}
+  \begin{itemize}
+    \item Létrehozás: első értékadáskor.
+    \item Típus lekérdezése: \texttt{type()}.
+    \item Típusváltás lehetséges.
+  \end{itemize}
+  \begin{block}{Példa}
+\begin{verbatim}
+value = 1
+print(type(value))
+value = "bond"
+print(type(value))
+\end{verbatim}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Változónevek}
+  \begin{itemize}
+    \item Betűvel vagy \texttt{\_} jellel kezdődnek.
+    \item Nem kezdődhetnek számmal.
+    \item Betűk, számok, \texttt{\_}.
+    \item Kis- és nagybetű érzékeny.
+    \item Javaslat: kisbetű + \texttt{snake\_case}.
+    \item Elgépelés: \texttt{NameError}.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Beépített típusok}
+  \small
+  \begin{tabular}{ll}
+    \toprule
+    Kategória & Típusok \\
+    \midrule
+    Szöveg & \texttt{str} \\
+    Szám & \texttt{int}, \texttt{float}, \texttt{complex} \\
+    Logikai & \texttt{bool} \\
+    Szekvencia & \texttt{list}, \texttt{tuple}, \texttt{range} \\
+    Szótár & \texttt{dict} \\
+    Halmaz & \texttt{set}, \texttt{frozenset} \\
+    Bináris & \texttt{bytes}, \texttt{bytearray}, \texttt{memoryview} \\
+    \bottomrule
+  \end{tabular}
+\end{frame}
+
+\bgsection{Karakterláncok}
+
+\begin{frame}[fragile]{Literálok és indexelés}
+  \begin{itemize}
+    \item Idézőjelek: \texttt{"szöveg"} vagy \texttt{'szöveg'}.
+    \item Első index: 0.
+    \item Nincs külön karaktertípus: egy karakter is \texttt{str}.
+  \end{itemize}
+  \begin{block}{Példa}
+\begin{verbatim}
+text = "Portfolio"
+print(text[0])
+print(type(text[0]))
+\end{verbatim}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Keresés és szeletelés}
+  \begin{itemize}
+    \item Részkarakterlánc: \texttt{"HU" in isin}.
+    \item Pozíció: \texttt{isin.find("HU")}.
+    \item Szelet: \texttt{text[start:end:step]}.
+  \end{itemize}
+  \begin{block}{ISIN-példa}
+\begin{verbatim}
+isin = "HU0000403706"
+start = isin.find("HU")
+print("HU" in isin)
+print(isin[start:start + 2])
+\end{verbatim}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{String-metódusok}
+  \begin{itemize}
+    \item \texttt{len()}, \texttt{strip()}, \texttt{upper()}, \texttt{lower()}.
+    \item \texttt{title()}, \texttt{replace()}.
+  \end{itemize}
+  \begin{block}{Példa}
+\begin{verbatim}
+name = "  danube VALUE fund  "
+clean = name.strip()
+print(clean.title())
+print(len(clean))
+\end{verbatim}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Formázás}
+  \begin{itemize}
+    \item Összefűzés: \texttt{+}.
+    \item Helyőrzők: \texttt{str.format()}.
+    \item Modern forma: f-string.
+    \item Számformátum: \texttt{:.2f}.
+    \item Escape: \texttt{\textbackslash n}, \texttt{\textbackslash t}; raw string: \texttt{r"..."}.
+  \end{itemize}
+  \begin{block}{Kötvénykupon}
+\begin{verbatim}
+bond = "Danube Treasury 2031"
+coupon = 0.0453
+print(f"{bond}: {coupon * 100:.2f}%")
+\end{verbatim}
+  \end{block}
+\end{frame}
+
+\bgsection{Feladatok}
+
+\begin{frame}{Forrásfeladatok:}
+  \small
+  \begin{enumerate}
+    \item Két sorból álló szöveg kiírása két külön sorba.
+    \item Mit jelent az \texttt{r} karakter egy string-literál előtt?
+    \item Milyen típus tárol egyetlen karaktert?
+    \item Vezeték- és utónév két változóban; teljes név egy \texttt{print}-tel.
+    \item Két szóból álló, szóközzel tagolt string szavainak megcserélése.
+    \item String megfordítása szeleteléssel: \texttt{ABC} $\rightarrow$ \texttt{CBA}.
+    \item Két szóból álló név első szavának nagybetűsítése.
+    \item Két szóból álló névből monogram készítése.
+    \item Kisbetűs, két szóból álló név javítása címformátumra.
+    \item Szóközök levágása, majd a megtisztított string hosszának kiírása.
+  \end{enumerate}
+  \begin{block}{Első órai fókusz}
+    \textbf{5., 7. és 9. feladat}.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Órai munkamenet}
+  \begin{enumerate}
+    \item Környezet ellenőrzése.
+    \item Hello World futtatása.
+    \item Rövid fogalmi áttekintés.
+    \item Forrásfeladatok önálló megoldása.
+    \item Közös megbeszélés: 5., 7., 9.
+  \end{enumerate}
+\end{frame}
+
+\end{document}
