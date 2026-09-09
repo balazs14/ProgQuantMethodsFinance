@@ -1,0 +1,17 @@
+{
+  "recommendations": ["ms-python.python", "ms-toolsai.jupyter"],
+  "unwantedRecommendations": [
+    "github.copilot",
+    "github.copilot-chat",
+    "github.copilot-chat@prerelease",
+    "codeium.codeium",
+    "codeium.codeium-prerelease",
+    "tabnine.tabnine-vscode",
+    "continue.continue",
+    "saoudrizwan.claude-dev",
+    "rooveterinaryinc.roo-cline",
+    "blackboxapp.blackbox",
+    "amazonwebservices.amazon-q-vscode",
+    "google.geminicodeassist"
+  ]
+}
