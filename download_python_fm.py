@@ -10,7 +10,10 @@ from urllib.request import Request, urlopen
 
 BASE_HOST = "corvinus-materials.azurewebsites.net"
 ROOT_URL = f"https://{BASE_HOST}/python_psz/"
-OUTPUT_ROOT = Path(__file__).resolve().parent / "python_fm"
+OUTPUT_ROOT = Path(__file__).resolve().parent / "BurkaDavidCourse_FM_HU"
+INDEX_ONLY = os.environ.get("PYTHON_FM_INDEX_ONLY", "").lower() in {
+    "1", "true", "yes", "on"
+}
 ALLOWED_HTML_PREFIXES = (
     "/python_psz/",
     "/python_basic/",
@@ -183,12 +186,79 @@ def remove_rows_from_reduced_index():
         "search_algorithms",
         "sorting/",
         "ZH1_Minta",
-        "I. Zárthelyi",
+        "ŐSZI SZÜNET",
+        "Ismétlés",
+        "Monte Carlo szimulációk",
     )
     text = row_pattern.sub(
-        lambda match: "" if any(marker in match.group(0) for marker in excluded_markers) else match.group(0),
+        lambda match: ""
+        if (
+            any(marker in match.group(0) for marker in excluded_markers)
+            or (
+                "I. Zárthelyi" in match.group(0)
+                and "II. Zárthelyi" not in match.group(0)
+            )
+        )
+        else match.group(0),
         text,
     )
+
+    rows = [row for row in row_pattern.findall(text) if "<th" not in row.lower()]
+    rewritten_rows = []
+    for row in rows:
+        compact_row = " ".join(row.split())
+
+        def set_week(number):
+            return re.sub(
+                r"(<td[^>]*>\s*)[^<]*(\s*</td>)",
+                rf"\g<1>{number}.\g<2>",
+                row,
+                count=1,
+                flags=re.IGNORECASE,
+            )
+
+        if "module/index.html" in compact_row:
+            row = set_week(6)
+        elif "Pandas I." in compact_row:
+            row = set_week(7)
+        elif "Pandas II." in compact_row:
+            row = set_week(8)
+        elif "plotly/index.html" in compact_row:
+            row = set_week(9)
+        elif "practice/index.html" in compact_row:
+            row = set_week(11)
+        elif "II. Zárthelyi" in compact_row:
+            row = row.replace("II. Zárthelyi", "Midterm")
+
+        rewritten_rows.append(row)
+        if "function/index.html" in compact_row:
+            rewritten_rows.append(
+                "<tr>\n"
+                "<td style=\"text-align: center;\">5.</td>\n"
+                "<td style=\"text-align: left;\"><strong>Ismétlés</strong></td>\n"
+                "</tr>"
+            )
+        if "Adatvizualizáció" in row:
+            rewritten_rows.append(
+                "<tr>\n"
+                "<td style=\"text-align: center;\">10.</td>\n"
+                "<td style=\"text-align: left;\"><strong>Monte Carlo szimulációk</strong></td>\n"
+                "</tr>"
+            )
+
+    table_match = re.search(
+        r"(?P<open><table>.*?<tbody>).*?(?P<close></tbody>.*?</table>)",
+        text,
+        flags=re.DOTALL | re.IGNORECASE,
+    )
+    if table_match:
+        text = (
+            text[:table_match.start()]
+            + table_match.group("open")
+            + "\n".join(rewritten_rows)
+            + table_match.group("close")
+            + text[table_match.end():]
+        )
     index_path.write_text(text, encoding="utf-8")
 
 
@@ -199,6 +269,27 @@ def write_root_course_index():
         return
 
     text = source_path.read_text(encoding="utf-8")
+
+    text = re.sub(
+        r"\s*<p>\s*<a href=\"(?:introduction/index\.html|\.\./python_basic/installation/index\.html|\.\./python_basic/ipynb/index\.html)\">.*?</p>",
+        "",
+        text,
+        flags=re.DOTALL | re.IGNORECASE,
+    )
+    text = re.sub(
+        r"<title>.*?</title>",
+        "<title>Fundamentals of Programming by Burka Dávid</title>",
+        text,
+        count=1,
+        flags=re.DOTALL | re.IGNORECASE,
+    )
+    text = re.sub(
+        r"<h1 id=\"[^\"]+\">.*?</h1>",
+        "<h1 id=\"fundamentals-of-programming\">Fundamentals of Programming by Burka Dávid</h1>",
+        text,
+        count=1,
+        flags=re.DOTALL | re.IGNORECASE,
+    )
 
     def move_local_link(match):
         original = match.group("url")
@@ -275,11 +366,13 @@ def write_directory_indexes():
 
 def main():
     OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
-    downloaded, errors = crawl()
+    downloaded, errors = ([], []) if INDEX_ONLY else crawl()
     remove_rows_from_reduced_index()
     write_root_course_index()
-    write_directory_indexes()
-    print(f"Downloaded {len(downloaded)} files into {OUTPUT_ROOT}")
+    if not INDEX_ONLY:
+        write_directory_indexes()
+    mode = "Recreated indexes" if INDEX_ONLY else f"Downloaded {len(downloaded)} files"
+    print(f"{mode} in {OUTPUT_ROOT}")
     if errors:
         print(f"Encountered {len(errors)} fetch errors:")
         for url, message in errors[:20]:

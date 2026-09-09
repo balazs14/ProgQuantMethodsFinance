@@ -1,0 +1,22 @@
+[
+  {
+    "index": "Anna",
+    "apple": 3,
+    "orange": 0
+  },
+  {
+    "index": "Ben",
+    "apple": 2,
+    "orange": 3
+  },
+  {
+    "index": "Cecil",
+    "apple": 0,
+    "orange": 7
+  },
+  {
+    "index": "David",
+    "apple": 1,
+    "orange": 2
+  }
+]
