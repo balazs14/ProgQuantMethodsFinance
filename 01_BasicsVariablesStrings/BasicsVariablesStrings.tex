@@ -1,0 +1,513 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\input{../pqmfcourse-beamer.sty}
+
+\title{Basics, Variables, and Strings}
+\subtitle{Lesson 1: getting started with Python}
+\author{Programming and Quantitative Methods in Finance}
+\date{}
+
+\begin{document}
+
+\titleandoutline
+
+\bgsection{Getting started}
+
+\begin{frame}{Installing Python}
+  \begin{itemize}
+    \item Install a current Python 3 release from \url{https://www.python.org/}
+          or use a managed distribution such as Anaconda.
+    \item During installation, make sure Python can be run from the
+          command line. Note that on some systems, you may need to use
+          \texttt{python3} or \texttt{Py} instead of \texttt{python}.
+    \item Verify the installation with \texttt{python3 --version}.
+    \item Use the same interpreter consistently for scripts, notebooks, and
+          package installation.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Virtual environment}
+  \begin{itemize}
+    \item Keep course packages isolated from the system Python installation.
+    \item From the repository root, create and activate \texttt{.venv}.
+  \end{itemize}
+  \begin{block}{macOS and Linux}
+    \texttt{python3 -m venv .venv}\\
+    \texttt{source .venv/bin/activate}\\
+    \texttt{python -m pip install --upgrade pip}
+  \end{block}
+  \begin{block}{Windows PowerShell}
+    \texttt{.venv\textbackslash Scripts\textbackslash Activate.ps1}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Integrated development environments (IDEs)}
+  \begin{description}
+    \item[Visual Studio Code] Recommended for this course: scripts, notebooks,
+          extensions, and an integrated terminal. This is where exams will be given.
+    \item[Jupyter] Excellent for exploratory analysis and presenting code,
+          output, and plots together.
+    \item[PyCharm] A full-featured Python IDE and a valid alternative.
+    \item[Online editors] Useful for quick experiments, but less suitable for
+          the complete course repository and local data files.
+  \end{description}
+\end{frame}
+
+\begin{frame}{Visual Studio Code}
+  \begin{enumerate}
+    \item Install Visual Studio Code from \url{https://code.visualstudio.com/}.
+    \item Install Microsoft's \textbf{Python} extension.
+    \item Install Microsoft's \textbf{Jupyter} extension for notebook files.
+    \item Open the course repository as a folder.
+    \item Use ``Python: Select Interpreter'' and choose the course environment.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{In-class task: Hello World}
+  Now that Python and VS Code are installed, try your first program.
+  \begin{block}{hello.py}
+\begin{verbatim}
+print("Hello World!")
+\end{verbatim}
+  \end{block}
+  \begin{enumerate}
+    \item Create a file called \texttt{hello.py} in the course folder.
+    \item Run it with VS Code's ``Run Python File in Terminal'', or with
+          \texttt{python3 hello.py} in a terminal.
+    \item Confirm the output is exactly \texttt{Hello World!}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{In-class task: comments and line continuation}
+  \begin{enumerate}
+    \item Add a comment above the \texttt{print} line explaining what the
+          program does, and an inline comment after it.
+  \end{enumerate}
+  \begin{block}{Comments}
+\begin{verbatim}
+# Hello World program
+print("Hello World!")  # this line displays the text
+\end{verbatim}
+  \end{block}
+  \begin{enumerate}
+    \setcounter{enumi}{1}
+    \item Rewrite the \texttt{print} call using a backslash to split it over
+          three lines, and run it again.
+  \end{enumerate}
+  \begin{block}{Line continuation}
+\begin{verbatim}
+print( \
+      "Hello World!" \
+     )
+\end{verbatim}
+  \end{block}
+\end{frame}
+
+\bgsection{Jupyter notebooks}
+
+\begin{frame}{What is an \texttt{.ipynb} file?}
+  \begin{itemize}
+    \item A Jupyter notebook stores code cells, Markdown explanations, and
+          output in one document.
+    \item It is useful for data analysis, plots, and step-by-step demonstrations.
+    \item It is mainly an educational and presentation format in this course;
+          submitted classroom work may still be requested as a \texttt{.py} file.
+    \item Notebook files are JSON documents internally, but should be edited
+          through Jupyter or VS Code rather than by hand.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Running a notebook in VS Code}
+  \begin{enumerate}
+    \item Open the \texttt{.ipynb} file.
+    \item Enable or install the Python and Jupyter extensions if prompted.
+    \item Select the course \texttt{.venv} as the notebook kernel.
+    \item Run cells individually, or run the notebook from the toolbar.
+    \item Re-run relevant cells after changing code or input data.
+  \end{enumerate}
+  \begin{block}{Kernel reminder}
+    If several Python installations exist, the first run may ask which one
+    should execute the notebook. Choose the course environment.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Notebook troubleshooting}
+  \begin{description}
+    \item[No kernel] Select the \texttt{.venv} interpreter in the notebook's
+          kernel picker.
+    \item[Missing package] Install the package into the selected environment,
+          then restart the kernel.
+    \item[Stale output] Re-run the cell, or restart and run all cells in order.
+    \item[Different results] Check the selected interpreter, package versions,
+          working directory, and input data.
+  \end{description}
+\end{frame}
+
+\begin{frame}{Notebook habits}
+  \begin{itemize}
+    \item Run cells in a meaningful order and keep the notebook reproducible.
+    \item Explain non-obvious calculations in Markdown cells.
+    \item Do not treat displayed output as current until its code has been run
+          in the selected kernel.
+    \item For submitted work, follow the file format and submission instructions
+          given in class.
+  \end{itemize}
+\end{frame}
+
+\bgsection{Programming basics}
+
+\begin{frame}{Programs: input, processing, output}
+  \begin{itemize}
+    \item Computers cannot read our minds, so we need a way to communicate
+          with them: this is what applications (programs, software) do.
+    \item The user gives instructions (\textbf{input}); the computer executes
+          them; the computer reports back the result (\textbf{output}).
+    \item \textbf{Programming} is the process of building the applications
+          that carry out this communication.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Machine code, languages, and algorithms}
+  \begin{itemize}
+    \item Computers understand \textbf{machine code}: instructions and data in
+          a form the processor can execute (binary, for today's machines).
+    \item Machine code is very hard for humans to read, so we use
+          \textbf{programming languages} instead: sets of textual instructions
+          that, combined according to a formal structure (\textbf{syntax}),
+          produce machine code.
+    \item Low-level (\textbf{assembly}) languages are close to machine code and
+          hard to read; we use \textbf{high-level} languages (Python, C\#, and
+          similar), designed to be easy for humans to read and write.
+    \item An \textbf{algorithm} is an abstract, finite, precisely defined
+          sequence of steps that solves a problem (for example: find the
+          smallest value in a set of numbers).
+    \item \textbf{Implementation} is writing that algorithm in a programming
+          language so that a working application results.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Python}
+  \begin{itemize}
+    \item Python is a general-purpose, high-level programming language created
+          by Guido van Rossum and first released in 1991.
+    \item It is interpreted: code runs line by line, so syntax errors only
+          appear once the interpreter reaches them.
+    \item Python's simple, readable syntax has made it very widely used,
+          including for demanding tasks such as machine learning.
+    \item An active community and extensive documentation also mean AI
+          assistants have a great deal of good Python code to learn from.
+  \end{itemize}
+  \begin{block}{A note on AI tools}
+    Using AI assistants for programming tasks is encouraged in this course.
+    But to handle advanced problems and to direct an AI tool well, you first
+    need to master the basics yourself --- and that only happens if you do not
+    let a machine do the thinking for you.
+  \end{block}
+\end{frame}
+
+\bgsection{Variables}
+
+\begin{frame}[fragile]{Python variables}
+  \begin{itemize}
+    \item A variable is a named container for data: think of it as a labelled
+          box you can fill and later retrieve.
+    \item Unlike many languages, Python has no keyword to declare a variable.
+          A variable is created the first time a value is assigned to it.
+  \end{itemize}
+  \begin{block}{Example}
+\begin{verbatim}
+x = 1
+x = "Corvinus"
+print(x)
+\end{verbatim}
+    Output: \texttt{Corvinus}
+  \end{block}
+  \begin{itemize}
+    \item Strings may be written with single or double quotes: no difference.
+    \item An assignment may reuse other variables, or even the variable itself:
+          \texttt{x = x + y + 1}. Self-concatenation can be shortened with
+          \texttt{+=}.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Variable names}
+  \begin{itemize}
+    \item A name can be short (\texttt{x}, \texttt{y}) or descriptive
+          (\texttt{age}, \texttt{car\_name}, \texttt{total\_weight}).
+  \end{itemize}
+  \textbf{Rules:}
+  \begin{itemize}
+    \item Must start with a letter or an underscore \texttt{\_}.
+    \item Cannot start with a digit.
+    \item May only contain letters, digits, and underscores.
+    \item Names are \textbf{case-sensitive}: \texttt{age}, \texttt{Age}, and
+          \texttt{AGE} are three different variables.
+    \item Python 3 allows many Unicode symbols in names.
+    \item A name cannot be a reserved word (an existing keyword, method, or
+          class name).
+  \end{itemize}
+  \begin{block}{A misspelled name causes a runtime \texttt{NameError}}
+\begin{verbatim}
+message = "Hello World!"
+print(mesage)
+\end{verbatim}
+    \texttt{NameError: name 'mesage' is not defined}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Naming conventions}
+  \begin{itemize}
+    \item These are not required by the language, but are good practice.
+    \item Global variable names should be all lowercase, with words separated
+          by underscores (for now we only use global variables).
+    \item Avoid names that are too generic or overly complex: find the
+          balance. Bad: \texttt{data\_structure}, \texttt{my\_list},
+          \texttt{dictionary\_for\_the\_purpose\_of\_storing\_word\_definitions}.
+    \item When using CamelCase, capitalise each letter of an abbreviation
+          (e.g.\ \texttt{HTTPServer}).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Python's built-in data types}
+  \small
+  \begin{tabular}{ll}
+    \toprule
+    Category & Type name(s) \\
+    \midrule
+    String (text) & \texttt{str} \\
+    Numeric types & \texttt{int}, \texttt{float}, \texttt{complex} \\
+    Boolean type & \texttt{bool} \\
+    Sequence types & \texttt{list}, \texttt{tuple}, \texttt{range} \\
+    Dictionary & \texttt{dict} \\
+    Set & \texttt{set}, \texttt{frozenset} \\
+    Binary types & \texttt{bytes}, \texttt{bytearray}, \texttt{memoryview} \\
+    \bottomrule
+  \end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]{Checking a variable's type}
+  \begin{itemize}
+    \item A variable's type never needs to be declared, and it may even change
+          after assignment.
+    \item The \texttt{type()} function reports a variable's current type.
+  \end{itemize}
+  \begin{block}{Example}
+\begin{verbatim}
+x = 1
+print(type(x))   # <class 'int'>
+print(x)         # 1
+
+x = "Corvinus"
+print(type(x))   # <class 'str'>
+print(x)         # Corvinus
+\end{verbatim}
+  \end{block}
+\end{frame}
+
+\bgsection{Strings}
+
+\begin{frame}[fragile]{String literals}
+  \begin{itemize}
+    \item Python strings are surrounded by a pair of single or double quotes.
+          A directly written character sequence like this is a \textbf{literal}.
+    \item \texttt{"hello"} is exactly the same as \texttt{'hello'}.
+    \item Using the other quote character lets you include a quote mark in the
+          text: \texttt{print("D'Artagnan is not one of the three musketeers")}.
+    \item The closing quote must match the opening one; otherwise Python
+          reports a syntax error (the string never closes before end of line).
+  \end{itemize}
+  \begin{block}{Triple-quoted strings}
+    Triple quotes (\texttt{"""..."""}) allow writing a long string across
+    several source lines for readability. The displayed text is still a single
+    line unless newline characters are included explicitly.
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Characters and indexing}
+  \begin{itemize}
+    \item A string behaves like a list: any element can be accessed by index.
+    \item Like most languages, Python indexes strings starting at 0.
+    \item Python has no separate character type: a single character is just a
+          one-letter string.
+  \end{itemize}
+  \begin{block}{Example}
+\begin{verbatim}
+x = "Hello :)"
+y = x[0]
+print(y)          # H
+print(type(y))    # <class 'str'>
+\end{verbatim}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Searching within a string}
+  \begin{itemize}
+    \item The \texttt{in} operator checks whether a substring is present and
+          returns a boolean.
+    \item \texttt{find()} returns the position of the first match (or \texttt{-1}).
+  \end{itemize}
+  \begin{block}{Example}
+\begin{verbatim}
+x = "Budapest Corvinus University"
+print("Corvinus" in x)        # True
+start = x.find("Corvinus")
+print(start)                  # 9
+\end{verbatim}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Slicing}
+  Slicing uses \texttt{string[start:end:step]}.
+  \begin{itemize}
+    \item \texttt{start}: index of the first character to keep (default 0).
+    \item \texttt{end}: index just past the last character to keep (default:
+          the string's length).
+    \item \texttt{step}: keep every \texttt{step}-th character (default 1).
+  \end{itemize}
+  \begin{block}{Example}
+\begin{verbatim}
+x = "Budapest Corvinus University"
+print(x[:])       # the whole string
+print(x[:1])      # "B"
+print(x[::2])     # every second character
+start = x.find("Corvinus")
+print(x[start:start+8])   # "Corvinus"
+\end{verbatim}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{String functions}
+  \begin{itemize}
+    \item \texttt{len(x)} returns the length of \texttt{x} (works for other
+          types too, not only strings).
+    \item Type-specific functions are called with a dot after the variable,
+          e.g.\ \texttt{x.strip()}; the variable itself is a hidden first
+          argument, so the parentheses are often empty.
+  \end{itemize}
+  \begin{block}{Common string methods}
+\begin{verbatim}
+x = " Budapest Corvinus University "
+print(x.strip())     # remove leading/trailing spaces
+print(x.upper())     # BUDAPEST CORVINUS UNIVERSITY
+print(x.lower())     # budapest corvinus university
+print("kis pista".title())     # Kis Pista
+print(x.replace("Budapest", "Vienna"))
+print("Budapest".upper())  # methods work on literals too
+\end{verbatim}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Concatenation and \texttt{str.format()}}
+  \begin{itemize}
+    \item The \texttt{+} operator joins strings together.
+    \item \texttt{str.format()} is more readable for building longer messages,
+          and can insert non-string values (e.g.\ numbers) without manual
+          type conversion.
+  \end{itemize}
+  \begin{block}{Example}
+\begin{verbatim}
+x, y, z = "Budapest", "Corvinus", "University"
+print(x + " " + y + " " + z)
+
+s = "My name is {}. {} {}."
+print(s.format("Bond", "James", "Bond"))
+
+s = "My name is {0}. {1} {0}."   # numbered placeholders
+print(s.format("Bond", "James"))
+\end{verbatim}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{f-strings and format parameters}
+  \begin{itemize}
+    \item Since Python 3.6, an \texttt{f} or \texttt{F} before the opening
+          quote creates an \textbf{f-string}: variables can be written
+          directly inside \texttt{\{\}}, with no function call needed.
+    \item Both approaches accept format parameters, most often used for
+          numbers and dates.
+  \end{itemize}
+  \begin{block}{Example}
+\begin{verbatim}
+first, last = "James", "Bond"
+print(f"My name is {last}. {first} {last}.")
+
+number = 5
+print(f"Short decimal: {number:.2f}")   # Short decimal: 5.00
+print(f"Long decimal: {number:.10f}")   # Long decimal: 5.0000000000
+\end{verbatim}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Escape characters and raw strings}
+  \begin{itemize}
+    \item The backslash \texttt{\textbackslash} is the \textbf{escape}
+          character: it tells Python the next character has a special meaning
+          rather than appearing literally.
+    \item An escaped quote mark is treated as an ordinary character, not as
+          the string's opening or closing mark.
+    \item To print a literal backslash, write it twice: \texttt{\textbackslash\textbackslash}.
+    \item Common special characters: \texttt{\textbackslash n} (newline) and
+          \texttt{\textbackslash t} (tab).
+    \item An \texttt{r} or \texttt{R} before the opening quote creates a
+          \textbf{raw string}, which disables escape-character handling ---
+          useful for file paths full of backslashes.
+  \end{itemize}
+  \begin{block}{Example}
+\begin{verbatim}
+print("D\'Artagnan and the \"Three Musketeers\".")
+print("c:\\temp\\file.txt")
+print(r"c:\temp\file.txt")   # raw string: backslashes kept as-is
+\end{verbatim}
+  \end{block}
+\end{frame}
+
+\bgsection{In-class exercises}
+
+\begin{frame}{In-class exercises: variables}
+  \begin{enumerate}
+    \item Store your surname and given name in two separate, all-lowercase
+          variables, then print your full name with a single \texttt{print}
+          call.
+    \item Assign an integer to a variable, print its \texttt{type()}, then
+          reassign a string to the same variable and print its \texttt{type()}
+          again.
+    \item Intentionally misspell a variable name in a \texttt{print} call, run
+          the program, and read the \texttt{NameError} message that results.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{In-class exercises: strings (1/2)}
+  \small
+  \begin{enumerate}
+    \item You are given a string containing two lines of text separated only
+          by a single space, for example: \texttt{"The sun scorches the field
+          Grasshoppers graze there"}. Modify the code so that \texttt{print}
+          shows the two parts on separate lines.
+    \item What does the \texttt{r} prefix before a string literal mean?
+    \item Which type is suitable in Python for storing a single character?
+    \item Write a program that swaps the two words of a two-word string
+          separated by a single space.
+    \item Write a program that reverses a string, e.g.\ \texttt{ABC} becomes
+          \texttt{CBA}. Hint: the step in a slice can be negative.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{In-class exercises: strings (2/2)}
+  \small
+  \begin{enumerate}
+    \setcounter{enumi}{5}
+    \item Write a program that upper-cases the first word of a two-word name,
+          e.g.\ \texttt{Jane Doe} $\rightarrow$ \texttt{JANE Doe}.
+    \item Write a program that extracts the initials from a two-word name,
+          e.g.\ \texttt{Jane Doe} $\rightarrow$ \texttt{JD}.
+    \item Write a program that fixes the capitalisation of a lowercase
+          two-word name, e.g.\ \texttt{jane doe} $\rightarrow$ \texttt{Jane Doe}.
+          Try it both with and without the dedicated string method.
+    \item Write a program that strips the leading and trailing spaces from a
+          string and then prints the length of the result, using as few lines
+          of code as possible. Try it both with and without the dedicated
+          string method.
+  \end{enumerate}
+\end{frame}
+
+\end{document}
