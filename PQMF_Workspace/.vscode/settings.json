@@ -1,0 +1,34 @@
+{
+  "chat.disableAIFeatures": true,
+  "github.copilot.enable": { "*": false },
+  "github.copilot.inlineSuggest.enable": false,
+  "github.copilot.nextEditSuggestions.enabled": false,
+  "editor.inlineSuggest.enabled": false,
+  "editor.inlineSuggest.suppressSuggestions": true,
+  "editor.inlineSuggest.edits.showCollapsed": true,
+  "extensions.ignoreRecommendations": false,
+  "r.alwaysUseActiveTerminal": true,
+  "r.bracketedPaste": true,
+
+  "terminal.integrated.profiles.osx": {
+    "bash (restricted)": {
+      "path": "/bin/bash",
+      "args": ["--rcfile", "${workspaceFolder}/.vscode/terminal-rc.sh", "-i"]
+    }
+  },
+  "terminal.integrated.profiles.linux": {
+    "bash (restricted)": {
+      "path": "/bin/bash",
+      "args": ["--rcfile", "${workspaceFolder}/.vscode/terminal-rc.sh", "-i"]
+    }
+  },
+  "terminal.integrated.defaultProfile.osx": "bash (restricted)",
+  "terminal.integrated.defaultProfile.linux": "bash (restricted)",
+
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#1f2937",
+    "statusBar.foreground": "#f9fafb",
+    "titleBar.activeBackground": "#111827",
+    "titleBar.activeForeground": "#f9fafb"
+  }
+}

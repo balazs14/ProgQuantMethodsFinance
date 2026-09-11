@@ -1,5 +1,10 @@
 {
-  "recommendations": ["ms-python.python", "ms-toolsai.jupyter"],
+  "recommendations": [
+    "ms-python.python",
+    "ms-toolsai.jupyter",
+    "REditorSupport.r",
+    "RDebugger.r-debugger"
+  ],
   "unwantedRecommendations": [
     "github.copilot",
     "github.copilot-chat",

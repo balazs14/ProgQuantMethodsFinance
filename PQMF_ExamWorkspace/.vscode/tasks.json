@@ -1,0 +1,34 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Restricted mode: check AI extensions",
+      "type": "shell",
+      "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\"",
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Restricted mode: watch AI usage",
+      "type": "shell",
+      "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\" --watch",
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Restricted mode: instructor reset (disable AI & restore theme)",
+      "type": "shell",
+      "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\" --reset",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "chat.disableAIFeatures": true,
+  "chat.commandCenter.enabled": false,
+  "github.copilot.enable": {
+    "*": false
+  },
+  "github.copilot.inlineSuggest.enable": false,
+  "github.copilot.nextEditSuggestions.enabled": false,
+  "github.copilot.editor.enableCodeActions": false,
+  "editor.inlineSuggest.enabled": false,
+  "editor.inlineSuggest.suppressSuggestions": true,
+  "editor.inlineSuggest.edits.showCollapsed": true,
+  "vsintellicode.modify.editor.suggestSelection": "disabled",
+  "extensions.ignoreRecommendations": false,
+  "extensions.allowed": {
+    "github.copilot": false,
+    "github.copilot-chat": false,
+    "codeium.codeium": false,
+    "codeium.codeium-prerelease": false,
+    "codeium.windsurfpilot": false,
+    "tabnine.tabnine-vscode": false,
+    "continue.continue": false,
+    "saoudrizwan.claude-dev": false,
+    "rooveterinaryinc.roo-cline": false,
+    "blackboxapp.blackbox": false,
+    "amazonwebservices.amazon-q-vscode": false,
+    "google.geminicodeassist": false,
+    "sourcegraph.cody-ai": false,
+    "supermaven.supermaven": false,
+    "augment.vscode-augment": false,
+    "bito.bito": false,
+    "*": true
+  },
+
+  "terminal.integrated.profiles.osx": {
+    "bash (restricted)": {
+      "path": "/bin/bash",
+      "args": ["--rcfile", "${workspaceFolder}/.vscode/terminal-rc.sh", "-i"]
+    }
+  },
+  "terminal.integrated.profiles.linux": {
+    "bash (restricted)": {
+      "path": "/bin/bash",
+      "args": ["--rcfile", "${workspaceFolder}/.vscode/terminal-rc.sh", "-i"]
+    }
+  },
+  "terminal.integrated.defaultProfile.osx": "bash (restricted)",
+  "terminal.integrated.defaultProfile.linux": "bash (restricted)",
+
+  "telemetry.telemetryLevel": "off",
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#1f2937",
+    "statusBar.foreground": "#f9fafb",
+    "titleBar.activeBackground": "#111827",
+    "titleBar.activeForeground": "#f9fafb",
+    "activityBar.background": "#1f2937",
+    "activityBar.foreground": "#f9fafb"
+  }
+}

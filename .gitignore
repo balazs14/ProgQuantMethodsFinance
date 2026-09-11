@@ -4,3 +4,4 @@ build/
 .venv/
 *.pdf
 .DS_Store
+__pycache__
