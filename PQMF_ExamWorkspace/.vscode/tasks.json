@@ -4,7 +4,16 @@
     {
       "label": "Restricted mode: check AI extensions",
       "type": "shell",
-      "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\"",
+      "command": "${command:workbench.action.terminal.sendSequence}",
+      "windows": {
+        "command": "pwsh -NoProfile -Command \"& '${workspaceFolder}\\.vscode\\extensions.ps1' 'check'\""
+      },
+      "osx": {
+        "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\" check"
+      },
+      "linux": {
+        "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\" check"
+      },
       "runOptions": {
         "runOn": "folderOpen"
       },
@@ -13,7 +22,15 @@
     {
       "label": "Restricted mode: watch AI usage",
       "type": "shell",
-      "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\" --watch",
+      "windows": {
+        "command": "pwsh -NoProfile -Command \"& '${workspaceFolder}\\.vscode\\extensions.ps1' 'watch'\""
+      },
+      "osx": {
+        "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\" --watch"
+      },
+      "linux": {
+        "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\" --watch"
+      },
       "runOptions": {
         "runOn": "folderOpen"
       },
@@ -23,7 +40,15 @@
     {
       "label": "Restricted mode: instructor reset (disable AI & restore theme)",
       "type": "shell",
-      "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\" --reset",
+      "windows": {
+        "command": "pwsh -NoProfile -Command \"& '${workspaceFolder}\\.vscode\\extensions.ps1' 'reset'\""
+      },
+      "osx": {
+        "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\" --reset"
+      },
+      "linux": {
+        "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\" --reset"
+      },
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",

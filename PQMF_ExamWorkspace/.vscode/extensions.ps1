@@ -1,27 +1,49 @@
-#!/bin/sh
-set -eu
+# PowerShell validator for Windows: ensures AI features remain disabled.
+# Run on workspace open or manually via task.
+param(
+    [ValidateSet("check", "reset", "watch")]
+    [string]$Mode = "check"
+)
 
-workspace_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
-vscode_dir="$workspace_root/.vscode"
-base_settings="$vscode_dir/settings.base.json"
-settings_file="$vscode_dir/settings.json"
-marker_file="$vscode_dir/.ai-extension-detected"
+$ErrorActionPreference = "Stop"
 
-mode="${1:-check}"
+$vscodeDir = Split-Path -Parent $PSCommandPath
+$workspaceRoot = Split-Path -Parent $vscodeDir
+$baseSettings = Join-Path $vscodeDir "settings.base.json"
+$settingsFile = Join-Path $vscodeDir "settings.json"
+$markerFile = Join-Path $vscodeDir ".ai-extension-detected"
 
-# Detect Python executable: prefer venv, then 'python', then 'python3'
-python_exe="python3"
-if [ -f "$workspace_root/.venv/bin/python" ]; then
-    python_exe="$workspace_root/.venv/bin/python"
-elif [ -f "$workspace_root/venv/bin/python" ]; then
-    python_exe="$workspace_root/venv/bin/python"
-elif command -v python >/dev/null 2>&1; then
-    python_exe="python"
-fi
+# Helper to find Python in venv or system
+function Get-PythonExe {
+    # Check if venv Python is available
+    $venvPython = Join-Path $workspaceRoot ".venv" "Scripts" "python.exe"
+    if (Test-Path $venvPython) {
+        return $venvPython
+    }
+    
+    $venvPython = Join-Path $workspaceRoot "venv" "Scripts" "python.exe"
+    if (Test-Path $venvPython) {
+        return $venvPython
+    }
+    
+    # Fall back to system Python
+    if (Get-Command python -ErrorAction SilentlyContinue) {
+        return "python"
+    }
+    
+    if (Get-Command python3 -ErrorAction SilentlyContinue) {
+        return "python3"
+    }
+    
+    throw "Python not found in venv or system PATH"
+}
 
-if [ "$mode" = "--reset" ] || [ "$mode" = "reset" ]; then
-    rm -f "$marker_file"
-    "$python_exe" - "$base_settings" "$settings_file" <<'PY'
+$pythonExe = Get-PythonExe
+
+if ($Mode -eq "reset") {
+    Remove-Item -Path $markerFile -ErrorAction SilentlyContinue
+    
+    $pythonCode = @'
 import sys, json
 
 base_path, settings_path = sys.argv[1], sys.argv[2]
@@ -40,13 +62,15 @@ settings["workbench.colorCustomizations"] = {
 with open(settings_path, "w") as f:
     json.dump(settings, f, indent=2)
     f.write("\n")
-PY
-    printf "✓ Workspace reset complete: AI features disabled and normal colors restored.\n" >&2
-    exit 0
-fi
+'@
 
-run_check() {
-    "$python_exe" - "$base_settings" "$settings_file" "$marker_file" <<'PY'
+    & $pythonExe -c $pythonCode $baseSettings $settingsFile
+    Write-Host "✓ Workspace reset complete: AI features disabled and normal colors restored." -ForegroundColor Green
+    exit 0
+}
+
+function Invoke-Check {
+    $pythonCode = @'
 import os, sys, json
 
 base_path = sys.argv[1]
@@ -128,20 +152,25 @@ else:
             json.dump(target_settings, f, indent=2)
             f.write("\n")
     print("OK")
-PY
+'@
+
+    $output = & $pythonExe -c $pythonCode $baseSettings $settingsFile $markerFile
+    return $output.Trim()
 }
 
-if [ "$mode" = "--watch" ] || [ "$mode" = "watch" ]; then
-    printf "Starting AI prevention watcher loop...\n" >&2
-    while true; do
-        run_check >/dev/null 2>&1 || true
-        sleep 1
-    done
-else
-    res=$(run_check)
-    if [ "$res" = "VIOLATION" ]; then
-        printf "⚠️ AI usage detected! Workspace glowing pink until instructor reset task is run.\n" >&2
-    else
-        printf "✓ Workspace settings validated. AI features disabled.\n" >&2
-    fi
-fi
+if ($Mode -eq "watch") {
+    Write-Host "Starting AI prevention watcher loop..." -ForegroundColor Cyan
+    while ($true) {
+        Invoke-Check | Out-Null
+        Start-Sleep -Seconds 1
+    }
+}
+else {
+    $result = Invoke-Check
+    if ($result -eq "VIOLATION") {
+        Write-Host "⚠️ AI usage detected! Workspace glowing pink until instructor reset task is run." -ForegroundColor Red
+    }
+    else {
+        Write-Host "✓ Workspace settings validated. AI features disabled." -ForegroundColor Green
+    }
+}

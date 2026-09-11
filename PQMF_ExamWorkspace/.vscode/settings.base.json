@@ -31,6 +31,19 @@
   "terminal.integrated.defaultProfile.osx": "bash (restricted)",
   "terminal.integrated.defaultProfile.linux": "bash (restricted)",
 
+  "terminal.integrated.profiles.windows": {
+    "PowerShell (restricted)": {
+      "path": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-Command",
+        ". '${workspaceFolder}\\.vscode\\terminal-rc.ps1'"
+      ],
+      "overrideName": true
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "PowerShell (restricted)",
+
   "extensions.allowed": {
     "github.copilot": false,
     "github.copilot-chat": false,
