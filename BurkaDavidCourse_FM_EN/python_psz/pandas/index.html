@@ -1602,7 +1602,7 @@ David      1       2
 2  Cecil      0       7
 3  David      1       2
 </code></pre>
-<p>It also often happens that we want to query a whole row of a data table (in database terminology: one of its records). We can do this using the <code>loc</code> property. With the help of <code>iloc</code> we can use the original ordinal index even if it has been overwritten.</p>
+<p>It also often happens that we want to query a whole row of a data table (in database terminology: one of its records). We can do this using the <code>loc</code> property. Using <code>iloc</code> we can still use the original ordinal index even if it has been overwritten.</p>
 <pre><code class="language-python">import pandas as pd
 
 df = pd.DataFrame()
@@ -1695,7 +1695,7 @@ df = pd.read_csv('imdb.csv', index_col='Title')
 print(df)
 </code></pre>
 <h3 id="leiro-alapmuveletek">Basic descriptive operations</h3>
-<p>With the help of the <code>head</code> function we can easily take a look at the data structure. It returns the number of rows of the table passed as a parameter. (In the absence of an argument the default value is 5.)</p>
+<p>The <code>head</code> function lets us easily take a look at the data structure. It returns the number of rows of the table passed as a parameter. (In the absence of an argument the default value is 5.)</p>
 <pre><code class="language-python">import pandas as pd
 df = pd.read_csv('imdb.csv', index_col='Title')
 print(df.head())
@@ -1826,7 +1826,7 @@ df2.index = df2.index + ' 2'
 df3 = pd.concat([df, df2])
 print(df3)
 </code></pre>
-<p>In the example above we loaded the data set a second time as well, but in the second round we overwrote the indices so that there would be no clash. Then with the help of the <code>concat</code> function we merged the two tables. Any number of tables can be merged in this way, and the correspondence of the columns does not have to be complete, but it is very important that there be no repetition in the indices. In the help many special parameters can be found that assist with the handling of the indices.</p>
+<p>In the example above we loaded the data set a second time as well, but in the second round we overwrote the indices so that there would be no clash. Then we merged the two tables using the <code>concat</code> function. Any number of tables can be merged in this way, and the correspondence of the columns does not have to be complete, but it is very important that there be no repetition in the indices. In the help many special parameters can be found that assist with the handling of the indices.</p>
 <h3 id="sorok-torlese">Deleting rows</h3>
 <pre><code class="language-python">import pandas as pd
 df = pd.read_csv('imdb.csv', index_col='Title')
@@ -1906,7 +1906,7 @@ Disaster Movie
 2012.783
 2009.8
 </code></pre>
-<p>The code below writes the average of the revenue into the place of the missing values with the help of the <code>fillna</code> function.</p>
+<p>The code below uses the <code>fillna</code> function to write the average revenue into the missing values.</p>
 <pre><code class="language-python">import pandas as pd
 df = pd.read_csv('imdb.csv', index_col='Title')
 

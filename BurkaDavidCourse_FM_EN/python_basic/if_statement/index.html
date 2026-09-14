@@ -1390,7 +1390,7 @@ a[href^="https://"]:before {
 </div>
 <p>In programming it often comes up that certain conditions have to be examined and the instructions have to be carried out depending on those conditions. For programming languages these conditions have to be formulated in the form of statements that can be decided. The result of such statements is the <a href="../variables_bool/index.html">boolean data type (bool)</a>, whose value can be True (<code>True</code>) or False (<code>False</code>).</p>
 <h2 id="if">if</h2>
-<p>Branching depending on conditions is one of the fundamental control structures of program code. Almost every programming language implements branching with the help of a statement written after the <code>if</code> keyword. The piece of code following it only runs if the statement was true. The difference between languages is primarily in the syntax and in determining the scope of the branch &ndash; that is, the number of lines of code affected. Most languages (e.g. C, C#, JavaScript, Java) mark the scope with curly brackets, but Python relies on indentation (spaces or a tab at the beginning of the line; although most environments automatically insert 4 spaces, even when tab is pressed, you have to be careful not to mix the two).  This undoubtedly leads to more concise code, but you have to pay attention to the structure of the code. </p>
+<p>Branching depending on conditions is one of the fundamental control structures of program code. Almost every programming language implements branching with a statement written after the <code>if</code> keyword. The piece of code following it only runs if the statement was true. The difference between languages is primarily in the syntax and in determining the scope of the branch &ndash; that is, the number of lines of code affected. Most languages (e.g. C, C#, JavaScript, Java) mark the scope with curly brackets, but Python relies on indentation (spaces or a tab at the beginning of the line; although most environments automatically insert 4 spaces, even when tab is pressed, you have to be careful not to mix the two).  This leads to more concise code, but you have to pay close attention to how the code is structured. </p>
 <pre><code class="language-python">a = 7
 b = 13
 if b &gt; a:
@@ -1416,7 +1416,7 @@ else:
 <pre><code>b is less than or equal to a
 </code></pre>
 <h2 id="elif">elif</h2>
-<p>Conditions that are not binary in nature can be handled with the help of further branches written into the appropriate branch(es).</p>
+<p>Conditions that aren't simply binary can be handled with further branches written into the appropriate branch(es).</p>
 <pre><code class="language-python">a, b = 13, 13
 if b &gt; a:
     print(&quot;b is greater than a&quot;)

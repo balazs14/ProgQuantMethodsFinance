@@ -1411,8 +1411,8 @@ These are the fruits on my list
  5. Step 4 is repeated with the third and the fourth list element as well
  6. After displaying the fourth list element a further iteration would begin, but we have reached the end of the list, so there is nothing to overwrite the <code>item</code> variable with, and therefore we leave the loop
  7. We continue running the code from the line following the loop, and the closing message is printed</p>
-<p>Following the present or the later examples can be made easier if we see step by step how the contents of the individual variables develop. With the help of the <a href="https://pythontutor.com/">pythontutor.com</a> tool the examples can also be reviewed in this form. If someone does not yet have experience in interpreting program code, using it can help a great deal.</p>
-<p>By applying the <a href="../range/index.html">range</a> method we can also go through sequences of numbers with the help of the <code>for</code> loop.</p>
+<p>It is easier to follow this and later examples if you can see step by step how the contents of the individual variables change. The <a href="https://pythontutor.com/">pythontutor.com</a> tool lets you review the examples in this way. If you don't yet have experience reading program code, it can help a great deal.</p>
+<p>By applying the <a href="../range/index.html">range</a> method we can also go through sequences of numbers using a <code>for</code> loop.</p>
 <pre><code class="language-python">print(&quot;The first ten square numbers:&quot;)
 for i in range(1, 11):
     print(i ** 2)
@@ -1480,7 +1480,7 @@ Done
 5. We increase the value of <code>counter</code> by one.
 6. We repeat points 2-5 four more times, until the value of <code>counter</code> reaches 5. At this point the value of the statement <code>counter &lt; 5</code> is already false (<code>False</code>), so on the sixth occasion we no longer enter the loop body.
 7. We continue running with the line after the loop, and display the &ldquo;Done&rdquo; message.</p>
-<p>It is soon apparent that a certain problem may arise if we modify the value appearing in the loop condition incorrectly or not at all. In this case we end up in an infinite loop. Something similar can also happen with a <code>for</code> loop, if in the loop body we start modifying the list we are currently going through.</p>
+<p>A problem can quickly arise if we modify the value in the loop condition incorrectly, or not at all. In this case we end up in an infinite loop. Something similar can also happen with a <code>for</code> loop, if in the loop body we start modifying the list we are currently going through.</p>
 <p>Fortunately most runtime environments are able to signal such errors and do not let our program waste enormous resources unnecessarily. Despite this it is advisable to take care to avoid this problem.</p>
 <p>The <code>while</code> loop is a so-called pre-test loop, that is, it checks the condition before running the loop body, so it is possible that its contents never run at all. Unlike other languages, Python has no corresponding post-test syntax, but this functionality can still be implemented.</p>
 <pre><code class="language-python">condition = True # A boolean variable that is true by default
@@ -1490,7 +1490,7 @@ while condition:
 </code></pre>
 <pre><code>Loop body
 </code></pre>
-<p>In the last line of the example an always-false statement is now placed into the <code>condition</code> variable, so that the structure is easy to follow, but naturally its value should be determined on the basis of a variable set in the loop body. It can be seen, however, that even with a permanently false statement the loop body ran at least once.</p>
+<p>In the last line of the example an always-false statement is now placed into the <code>condition</code> variable, so that the structure is easy to follow, but naturally its value should be determined on the basis of a variable set in the loop body. Even so, notice that the loop body ran at least once, despite the always-false statement.</p>
 <h2 id="break-continue"><code>break</code>, <code>continue</code></h2>
 <p>Loops generally do not serve merely to print a piece of text; they have much more complex tasks than that. It often happens that we do not want to carry out operations in every iteration, or that we only need some of them. In such cases we can handle the different situations with conditional statements written into the loop body.</p>
 <pre><code class="language-python">fruits = [&quot;pear&quot;,&quot;melon&quot;,&quot;strawberry&quot;,&quot;cherry&quot;]
@@ -1501,7 +1501,7 @@ for item in fruits:
 <pre><code>strawberry
 cherry
 </code></pre>
-<p>In the example above we printed the words from the list that are longer than 5 characters. It can be seen that even in such a short piece of code we had to apply double indentation. If a piece of code several hundred lines long were to go in place of the <code>print</code>, then every line of it would have to be indented unnecessarily. This can be avoided if we reverse the condition and tell the program to do nothing in the case of the shorter words.</p>
+<p>In the example above we printed the words from the list that are longer than 5 characters. Even in such a short piece of code, we already had to use double indentation. If a piece of code several hundred lines long were to go in place of the <code>print</code>, then every line of it would have to be indented unnecessarily. This can be avoided if we reverse the condition and tell the program to do nothing in the case of the shorter words.</p>
 <pre><code class="language-python">fruits = [&quot;pear&quot;,&quot;melon&quot;,&quot;strawberry&quot;,&quot;cherry&quot;]
 for item in fruits:
     if len(item) &lt;= 5:
@@ -1538,7 +1538,7 @@ for item in fruits:
 Found the one of length 5: melon
 </code></pre>
 <h2 id="folyamatos-adatbekeres">Continuous data entry</h2>
-<p>During <a href="../input/index.html">data entry</a> it can be annoying if the program stops immediately in the case of an incorrect input, when in fact the user has not received a solution to their problem. With the help of a <code>while</code> loop, however, we can repeat the question for them until they manage to give an acceptable input.</p>
+<p>During <a href="../input/index.html">data entry</a> it can be annoying if the program stops immediately in the case of an incorrect input, when in fact the user has not received a solution to their problem. A <code>while</code> loop, however, lets us repeat the question until they manage to give an acceptable input.</p>
 <pre><code class="language-python">while True:
     x = input(&quot;Give me a number and I will tell you its square: &quot;)
     if x.isnumeric():
@@ -1571,11 +1571,11 @@ Give me a number and I will tell you its square: [10]
 <li>if they give a correct number within 1-5 attempts, let us print: &ldquo;Data entry successful!&rdquo;</li>
 </ul>
 </li>
-<li>Ask the user for a string, then print it reversed with the help of a loop! (Do not use <em>slice</em> indexing with colons!)</li>
+<li>Ask the user for a string, then print it reversed using a loop! (Do not use <em>slice</em> indexing with colons!)</li>
 <li>Ask the user for numbers until they give 42. They have 5 attempts; if they do not succeed, print that unfortunately they did not manage it. If they get it right, print &bdquo;Congratulations&rdquo;.</li>
 <li>Ask the user for two numbers. Ask them for their product. They have 3 attempts, after which print the result. If they get it right, print &bdquo;good solution&rdquo;, and then the program should exit. We assume that the user gives integers.</li>
 <li>Ask the user for a number n, then print the first n elements of the Fibonacci sequence.</li>
-<li>Ask the user for a number. Calculate its factorial with the help of a loop, then print it to the output!</li>
+<li>Ask the user for a number. Calculate its factorial using a loop, then print it to the output!</li>
 <li>Let us write a program that gives the first 100 elements of the sequence <span class="arithmatex"><span class="MathJax_Preview">a_n = (1+1/n)^n</span><script type="math/tex">a_n = (1+1/n)^n</script></span>!</li>
 </ol>
 

@@ -1484,7 +1484,7 @@ gf2 = (gf
        .set_index('index'))
 gf2.index.name = &quot;&quot;
 </code></pre>
-<p>With an extra <code>reset_index</code> call we ensure that the original indices get in among the columns and are not lost, and then, after the other operations, we restore the original indices with the help of the <code>set_index</code> function. The extra line deletes the name &ldquo;index&rdquo; from the index. This does not really matter, but in this way the data structure will match the original 100%.</p>
+<p>With an extra <code>reset_index</code> call we ensure that the original indices get in among the columns and are not lost, and then, after the other operations, we restore the original indices using the <code>set_index</code> function. The extra line deletes the name &ldquo;index&rdquo; from the index. This does not really matter, but in this way the data structure will match the original 100%.</p>
 <h3 id="vonaldiagram">Line chart</h3>
 <p>Let us make a line chart showing the years on the x axis and GDP per capita on the y axis.</p>
 <pre><code class="language-python">fig = px.line(gf1, x='year', y='gdpPercap')
@@ -1504,7 +1504,7 @@ fig = px.bar(gf2, x='country', y='gdpPercap')
 fig.show()
 </code></pre>
 <h3 id="hisztogram">Histogram</h3>
-<p>With the help of the histogram we can display distributions.</p>
+<p>We can use a histogram to display distributions.</p>
 <pre><code class="language-python">fig = px.histogram(gf2, x='lifeExp')
 fig.show()
 </code></pre>
@@ -1516,7 +1516,7 @@ fig = px.histogram(gf2, x='lifeExp', y='count')
 fig.show()
 </code></pre>
 <h3 id="szorvany-es-buborekdiagram">Scatter and bubble chart</h3>
-<p>With the help of the scatter plot we can observe whether there is a correlation between the different values. Here we will also use the <code>hover_name</code> parameter, by giving which we can see the name of the given country if we move the cursor onto the value. First let us make a scatter plot for the continent and life expectancy.</p>
+<p>A scatter plot lets us see whether there is a correlation between different values. Here we will also use the <code>hover_name</code> parameter, by giving which we can see the name of the given country if we move the cursor onto the value. First let us make a scatter plot for the continent and life expectancy.</p>
 <pre><code class="language-python">fig = px.scatter(gf2, x='continent', y='lifeExp', hover_name='country')
 fig.show()
 </code></pre>
@@ -1524,7 +1524,7 @@ fig.show()
 <pre><code class="language-python">fig = px.scatter(gf2, x='gdpPercap', y='lifeExp', hover_name='country')
 fig.show()
 </code></pre>
-<p>It can be seen that the correlation between the two data series is logarithmic. Let us add a trend line and make the X axis logarithmic.</p>
+<p>The correlation between the two data series is logarithmic. Let us add a trend line and make the X axis logarithmic.</p>
 <pre><code class="language-python">fig = px.scatter(gf2, 
                  x='gdpPercap', 
                  y='lifeExp', 

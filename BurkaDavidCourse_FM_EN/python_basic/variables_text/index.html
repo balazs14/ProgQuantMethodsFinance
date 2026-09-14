@@ -1513,7 +1513,7 @@ print(x.replace(&quot;Budapest&quot;, &quot;Vienna&quot;))
 <pre><code>BUDAPEST CORVINUS UNIVERSITY
 </code></pre>
 <h2 id="szovegek-formazott-megjelenitese">Formatted display of text</h2>
-<p>Pieces of text can be joined together with the help of the <code>+</code> operator:</p>
+<p>Pieces of text can be joined together using the <code>+</code> operator:</p>
 <pre><code class="language-python">x = &quot;Budapest&quot;
 y = &quot;Corvinus&quot;
 z = &quot;University&quot;
@@ -1522,7 +1522,7 @@ print(x + &quot; &quot; + y + &quot; &quot; + z)
 <pre><code>Budapest Corvinus University
 </code></pre>
 <h3 id="strformat">str.format()</h3>
-<p>Although using <code>+</code> signs is convenient for inserting variables into text, it is already clear from the example above that the last line is somewhat awkward to read. It is more readable if we prepare the skeleton of the text in advance. With the help of the <code>format</code> text function we can then insert the variables passed as parameters into the parts of our text marked by placeholders given in curly brackets.</p>
+<p>Although using <code>+</code> signs is convenient for inserting variables into text, it is already clear from the example above that the last line is somewhat awkward to read. It is more readable if we prepare the skeleton of the text in advance. The <code>format</code> text function then lets us insert the variables passed as parameters into the parts of our text marked by placeholders given in curly brackets.</p>
 <p>A further advantage over the <code>+</code> signs is that in this way data of other types (typically numbers) can also be joined to the text without having to apply <a href="../type_conversion/index.html">type conversion</a>.</p>
 <pre><code class="language-python">s = &quot;My name is {}. {} {}.&quot;
 print(s.format(&quot;Bond&quot;,&quot;James&quot;,&quot;Bond&quot;))
@@ -1583,7 +1583,7 @@ print(f&quot;My name is {last_name}. \n\t{first_name} {last_name}.&quot;)
 <pre><code>My name is Bond. 
     James Bond.
 </code></pre>
-<p>The <em>escape</em> character is very useful, but it can also be distinctly annoying if, for example, we want to write many <code>\</code> signs when giving a file path. In such a case, with the help of an <code>r</code> or <code>R</code> character written before the quotation mark, we can switch off the functionality of the <em>escape</em> character within the text. (The <code>r</code> is short for &ldquo;raw&rdquo;.)</p>
+<p>The <em>escape</em> character is very useful, but it can also be distinctly annoying if, for example, we want to write many <code>\</code> signs when giving a file path. In such a case, writing an <code>r</code> or <code>R</code> character before the quotation mark switches off the <em>escape</em> character's function within the text. (The <code>r</code> is short for &ldquo;raw&rdquo;.)</p>
 <pre><code class="language-python">print(r&quot;c:\\temp\\something.txt&quot;)
 </code></pre>
 <pre><code>c:\\temp\\something.txt

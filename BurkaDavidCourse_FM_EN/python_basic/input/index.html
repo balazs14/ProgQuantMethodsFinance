@@ -1384,7 +1384,7 @@ a[href^="https://"]:before {
 <li><a href="#ellenorzo-kerdesek-feladatok">Review questions and exercises</a></li>
 </ul>
 </div>
-<p>The aim of most programs is to provide a solution to some problem of the end user. For this, however, it is essential that the user be able to pass information to the program. With the help of the <code>input</code> command we are able to request data from the user through the console.</p>
+<p>The aim of most programs is to provide a solution to some problem of the end user. For this, however, it is essential that the user be able to pass information to the program. The <code>input</code> command lets us request data from the user through the console.</p>
 <pre><code class="language-python">message = input(&quot;Say something and I will repeat it: &quot;)
 print(message)
 </code></pre>
@@ -1417,7 +1417,7 @@ TypeError                                 Traceback (most recent call last)
 
 TypeError: unsupported operand type(s) for ** or pow(): 'str' and 'int'
 </code></pre>
-<p>It can be seen that after entering the number, as soon as we try to carry out an operation that is not meaningful for text, we are immediately met with an error message. Therefore, if we want to work with data that is not of text type, we have to <a href="../type_conversion/index.html">convert</a> the input.</p>
+<p>After entering the number, as soon as we try to carry out an operation that is not meaningful for text, we immediately get an error message. Therefore, if we want to work with data that is not of text type, we have to <a href="../type_conversion/index.html">convert</a> the input.</p>
 <pre><code class="language-python">x = input(&quot;Give me a number and I will tell you its square: &quot;)
 x = int(x)
 print(x ** 2)

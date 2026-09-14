@@ -39,6 +39,149 @@ Justin Huang (Office Hours Thu 11:30--13:00 E275)}
   \end{itemize}
 \end{frame}
 
+\bgsection{Getting started}
+
+\begin{frame}{Installing Python}
+  \begin{itemize}
+    \item Install a current Python 3 release from \url{https://www.python.org/}
+          or use a managed distribution such as Anaconda.
+    \item During installation, make sure Python can be run from the
+          command line. Note that on some systems, you may need to use
+          \texttt{python3} or \texttt{Py} instead of \texttt{python}.
+    \item Verify the installation with \texttt{python3 --version}.
+    \item Use the same interpreter consistently for scripts, notebooks, and
+          package installation.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Virtual environment}
+  \begin{itemize}
+    \item Keep course packages isolated from the system Python installation.
+    \item From the repository root, create and activate \texttt{.venv}.
+  \end{itemize}
+  \begin{block}{macOS and Linux}
+    \texttt{python3 -m venv .venv}\\
+    \texttt{source .venv/bin/activate}\\
+    \texttt{python -m pip install --upgrade pip}
+  \end{block}
+  \begin{block}{Windows PowerShell}
+    \texttt{.venv\textbackslash Scripts\textbackslash Activate.ps1}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Integrated development environments (IDEs)}
+  \begin{description}
+    \item[Visual Studio Code] Recommended for this course: scripts, notebooks,
+          extensions, and an integrated terminal. This is where exams will be given.
+    \item[Jupyter] Excellent for exploratory analysis and presenting code,
+          output, and plots together.
+    \item[PyCharm] A full-featured Python IDE and a valid alternative.
+    \item[Online editors] Useful for quick experiments, but less suitable for
+          the complete course repository and local data files.
+  \end{description}
+\end{frame}
+
+\begin{frame}{Visual Studio Code}
+  \begin{enumerate}
+    \item Install Visual Studio Code from \url{https://code.visualstudio.com/}.
+    \item Install Microsoft's \textbf{Python} extension.
+    \item Install Microsoft's \textbf{Jupyter} extension for notebook files.
+    \item Open the course repository as a folder.
+    \item Use ``Python: Select Interpreter'' and choose the course environment.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{In-class task: Hello World}
+  Now that Python and VS Code are installed, try your first program.
+  \begin{block}{hello.py}
+\begin{verbatim}
+print("Hello World!")
+\end{verbatim}
+  \end{block}
+  \begin{enumerate}
+    \item Create a file called \texttt{hello.py} in the course folder.
+    \item Run it with VS Code's ``Run Python File in Terminal'', or with
+          \texttt{python3 hello.py} in a terminal.
+    \item Confirm the output is exactly \texttt{Hello World!}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{In-class task: comments and line continuation}
+  \begin{enumerate}
+    \item Add a comment above the \texttt{print} line explaining what the
+          program does, and an inline comment after it.
+  \end{enumerate}
+  \begin{block}{Comments}
+\begin{verbatim}
+# Hello World program
+print("Hello World!")  # this line displays the text
+\end{verbatim}
+  \end{block}
+  \begin{enumerate}
+    \setcounter{enumi}{1}
+    \item Rewrite the \texttt{print} call using a backslash to split it over
+          three lines, and run it again.
+  \end{enumerate}
+  \begin{block}{Line continuation}
+\begin{verbatim}
+print( \\
+      "Hello World!" \\
+     )
+\end{verbatim}
+  \end{block}
+\end{frame}
+
+\bgsection{Jupyter notebooks}
+
+\begin{frame}{What is an \texttt{.ipynb} file?}
+  \begin{itemize}
+    \item A Jupyter notebook stores code cells, Markdown explanations, and
+          output in one document.
+    \item It is useful for data analysis, plots, and step-by-step demonstrations.
+    \item It is mainly an educational and presentation format in this course;
+          submitted classroom work may still be requested as a \texttt{.py} file.
+    \item Notebook files are JSON documents internally, but should be edited
+          through Jupyter or VS Code rather than by hand.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Running a notebook in VS Code}
+  \begin{enumerate}
+    \item Open the \texttt{.ipynb} file.
+    \item Enable or install the Python and Jupyter extensions if prompted.
+    \item Select the course \texttt{.venv} as the notebook kernel.
+    \item Run cells individually, or run the notebook from the toolbar.
+    \item Re-run relevant cells after changing code or input data.
+  \end{enumerate}
+  \begin{block}{Kernel reminder}
+    If several Python installations exist, the first run may ask which one
+    should execute the notebook. Choose the course environment.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Notebook troubleshooting}
+  \begin{description}
+    \item[No kernel] Select the \texttt{.venv} interpreter in the notebook's
+          kernel picker.
+    \item[Missing package] Install the package into the selected environment,
+          then restart the kernel.
+    \item[Stale output] Re-run the cell, or restart and run all cells in order.
+    \item[Different results] Check the selected interpreter, package versions,
+          working directory, and input data.
+  \end{description}
+\end{frame}
+
+\begin{frame}{Notebook habits}
+  \begin{itemize}
+    \item Run cells in a meaningful order and keep the notebook reproducible.
+    \item Explain non-obvious calculations in Markdown cells.
+    \item Do not treat displayed output as current until its code has been run
+          in the selected kernel.
+    \item For submitted work, follow the file format and submission instructions
+          given in class.
+  \end{itemize}
+\end{frame}
+
 \bgsection{Python}
 
 \begin{frame}{How the Python classes work}

@@ -1400,7 +1400,7 @@ print(a[1])
 [1 2 3]
 2
 </code></pre>
-<p>Unlike lists, however, arrays can also be multidimensional. It follows from this that their size could not really be determined with the usual <code>len</code> command. Instead, the <code>shape</code> function belongs to the data type, with the help of which we get back the size of the individual dimensions in a <code>tuple</code>. Querying the elements also differs: although we produce the multidimensional array with the help of nested lists, we no longer refer to its elements with the <code>list[i][j]</code> syntax familiar from lists, but list the indices between one pair of brackets, separated by commas.</p>
+<p>Unlike lists, however, arrays can also be multidimensional, so the usual <code>len</code> command can't really determine their size. Instead, the data type has a <code>shape</code> function, which returns the size of the individual dimensions as a <code>tuple</code>. Querying the elements also differs: although we build the multidimensional array using nested lists, we no longer refer to its elements with the <code>list[i][j]</code> syntax familiar from lists, but list the indices between one pair of brackets, separated by commas.</p>
 <pre><code class="language-python">import numpy as np
 
 b = np.array([[1, 2, 3], [4, 5, 6]])

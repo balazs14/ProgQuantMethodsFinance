@@ -1387,15 +1387,15 @@ a[href^="https://"]:before {
 </li>
 </ul>
 </div>
-<p>As the code becomes longer and longer, sooner or later it becomes unavoidable to organise the code into several files. Source files that are impenetrably long are mocked by developers as <strong>spaghetti code</strong>. In a Python environment it is modules that serve this purpose. Modules are simple files with a .py extension, and they are identified on the basis of the file name. The names of the modules to be imported can be given after the <code>import</code> keyword &ndash; the .py extension does not have to be typed.</p>
+<p>As the code becomes longer and longer, sooner or later it becomes unavoidable to organise the code into several files. Developers call very long, hard-to-follow source files <strong>spaghetti code</strong>. In a Python environment it is modules that serve this purpose. Modules are simple files with a .py extension, and they are identified on the basis of the file name. The names of the modules to be imported can be given after the <code>import</code> keyword &ndash; the .py extension does not have to be typed.</p>
 <p>Modular programming means the process of breaking a large, unwieldy programming task into separate, smaller, more manageable subtasks or modules. Using modules has a number of advantages during application development:
 -   <strong>Simplicity</strong>: Instead of focusing on the whole problem, a module typically focuses on a relatively small part of the problem, so there is less scope for error.
 -   <strong>Maintainability</strong>: Modules are generally designed so as to enforce logical boundaries between different problem areas. If modules are written so as to minimise interdependence, the likelihood decreases that modifications to a single module will affect other parts of the program.
 -   <strong>Visibility/scoping</strong>: Modules generally define a separate namespace, which helps to avoid name collisions.
 -   <strong>Reusability</strong>: The functionality defined in one module can easily be reused by other parts of the application (through an appropriately defined interface). This makes repetition of code unnecessary.</p>
-<p>More than a hundred thousand packages containing modules are available for Python, which can easily be installed through the command-line package manager belonging to the distribution (e.g. pip, conda). The package manager is very important because packages may also use modules in other packages, and resolving these dependencies by hand would be a laborious and nerve-racking task.</p>
+<p>More than a hundred thousand packages containing modules are available for Python, which can easily be installed through the command-line package manager belonging to the distribution (e.g. pip, conda). The package manager is very important because packages may also use modules in other packages, and resolving these dependencies by hand would be difficult and time-consuming.</p>
 <h2 id="modul-importalasa-az-import-kulcsszo">Importing a module &ndash; the <code>import</code> keyword</h2>
-<p>With the help of the <code>import</code> statement we can load external pieces of code into our program. There are, however, a number of variants of the use of the statement, depending on exactly what we need.</p>
+<p>The <code>import</code> statement lets us load external pieces of code into our program. There are, however, a number of variants of the use of the statement, depending on exactly what we need.</p>
 <p>Importing one or more modules:</p>
 <pre><code>import &lt;module name&gt;[, &lt;module name&gt; ...]
 </code></pre>
@@ -1412,7 +1412,7 @@ a[href^="https://"]:before {
 <pre><code>dir(module)
 </code></pre>
 <h3 id="import-peldak">Import examples</h3>
-<p>We can simply import a module with the help of the <code>import</code> statement, but the name of the module also has to be given, separated by a dot, in order to access the definitions found in it:</p>
+<p>We can simply import a module with the <code>import</code> statement, but to access the definitions found in it we also have to give the name of the module, separated by a dot:</p>
 <pre><code class="language-python">import math
 print(&quot;The value of pi&quot;, math.pi)
 </code></pre>
@@ -1441,7 +1441,7 @@ print(e)
 print(&quot;The value of pi&quot;, pi)
 </code></pre>
 <p>In the example above we have imported all the definitions from the <code>math</code> module. This includes all the names, which thus become visible in our scope, except for those that begin with an underscore (these are the private definitions).</p>
-<p>Importing everything with an asterisk (<code>from &hellip; import *</code>) is not good programming practice. It is possible that the same variable name has been used in the other module as well. And the automatic code completion may offer an impenetrably large number of options. </p>
+<p>Importing everything with an asterisk (<code>from &hellip; import *</code>) is not good programming practice. It is possible that the same variable name has been used in the other module as well. And automatic code completion may offer far too many options to be useful. </p>
 
 </article>
 

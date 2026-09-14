@@ -1392,7 +1392,7 @@ a[href^="https://"]:before {
 <li><a href="#feladatok">Exercises</a></li>
 </ul>
 </div>
-<p><em>Functions</em> are named pieces of code that have one specific task. If this task has to be solved several times during the run, then instead of repeating the piece of code it is enough to <em>call</em> the appropriate function. With the help of functions not only is the code easier to write, but its readability improves, and testing and fixing it are simpler too.</p>
+<p><em>Functions</em> are named pieces of code that have one specific task. If this task has to be solved several times during the run, then instead of repeating the piece of code it is enough to <em>call</em> the appropriate function. Functions not only make the code easier to write, but also improve its readability, and make testing and fixing it simpler too.</p>
 <p>We can pass information to functions in the form of input <strong>parameters</strong>, and we can use the <strong>return value</strong> received as output in the further parts of the code. The terminology resembles that of functions used in mathematics for a reason. Let us take the example below: </p>
 <div class="arithmatex">
 <div class="MathJax_Preview">f(x) = x^2 + 3x</div>
@@ -1441,7 +1441,7 @@ greeting(&quot;jane&quot;)
 </code></pre>
 <pre><code>Welcome Jane!
 </code></pre>
-<p>In the example a name can be given to the function, on the basis of which it displays a suitably formatted greeting message. According to the official terminology <code>user_name</code> is a <strong>parameter</strong> of the function, which is a variable storing the information received. The literal &ldquo;jane&rdquo; passed at the function call is an <strong>argument</strong> of the function.</p>
+<p>In the example a name can be given to the function, on the basis of which it displays a suitably formatted greeting message. Formally, <code>user_name</code> is a <strong>parameter</strong> of the function - a variable that stores the information received. The literal &ldquo;jane&rdquo; passed at the function call is an <strong>argument</strong> of the function.</p>
 <blockquote>
 <p>In practice developers use the two expressions almost as synonyms and swap them around. Either may safely be used. We have only emphasised the difference in order to help you understand how functions work. In this material we still follow the precise terms for ease of interpretation, but from here on it should come as no surprise if we use these terms more freely.</p>
 </blockquote>
@@ -1499,7 +1499,7 @@ avg([2, 5, 1])
 </code></pre>
 <pre><code>2.6666666666666665
 </code></pre>
-<p>In the example we have implemented the average function. The parameter received is a list. With the help of a loop we add up the numbers (regardless of how many numbers appear in the list), and finally we divide the result by their count and display this.</p>
+<p>In the example we have implemented the average function. The parameter received is a list. Using a loop, we add up the numbers (regardless of how many numbers appear in the list), then divide the result by their count and display it.</p>
 <p>For the sake of the clarity of the example we have not written checks into it, but it is easy to see that if incorrect data is given we will soon run into an error. One advantage of functions is that if we handle the potential errors inside them, then we do not have to bother with this every time during their repeated use.</p>
 <p>The arguments passed to the function take on the data type corresponding to the value, unlike, for example, the <a href="../../python_basic/input/index.html">input</a> function, which always returns a text value. For this reason the <code>isnumeric</code> method familiar from strings will not work, since the <code>integer</code> type has no such method. Instead we have to use the <code>isinstance(object, type)</code> function.</p>
 <pre><code class="language-python">a = 5
@@ -1533,7 +1533,7 @@ avg()
 There was no number among the given values!
 </code></pre>
 <h2 id="visszateresi-ertek">Return value</h2>
-<p>With the help of parameters we can pass information to our function, but in most cases we also want to get something back. After the function has run, the function returns the value written after the <code>return</code> statement. Modifying the earlier average-calculating example:</p>
+<p>Parameters let us pass information to our function, but in most cases we also want to get something back. After the function has run, the function returns the value written after the <code>return</code> statement. Modifying the earlier average-calculating example:</p>
 <pre><code class="language-python">def avg(numbers):
     sum = 0
     for a in numbers:
@@ -1560,8 +1560,8 @@ print(f&quot;The given number is {parity(a)}&quot;)
 </code></pre>
 <pre><code>The given number is odd
 </code></pre>
-<p>In the example, regardless of which branch of the conditional statement we go into, the running of the function stops, so the contents of the <code>print</code> statement following it are never printed. It follows from this that if we place the <code>return</code>, for example, in the body of a loop, then it has a similar effect to the <code>break</code> statement.</p>
-<p>With the help of <code>return</code>, data of any type can be returned, for example a list or a tuple as well. </p>
+<p>In the example, regardless of which branch of the conditional statement we go into, the running of the function stops, so the contents of the <code>print</code> statement following it are never printed. So if we place <code>return</code> inside a loop body, for example, it has a similar effect to the <code>break</code> statement.</p>
+<p>The <code>return</code> statement can return data of any type, for example a list or a tuple as well. </p>
 <pre><code class="language-python">def even_numbers(x):
     numbers = []
     for i in range(1, x + 1):
@@ -1665,7 +1665,7 @@ print(b)
 <pre><code>['A', 'B', 'C']
 ['A', 'E', 'C', 'D']
 </code></pre>
-<p>Just so that things are not too simple, there are also so-called global variables, which can be declared with the <code>global</code> keyword. These can be accessed in any part of the program, even if we split the application into several files. Their regular use is considered bad practice, because particularly in the case of multi-user or multi-threaded applications the changes made to them can easily clash. They are, however, excellently suited to storing constant values. We will not use global variables in our programs.</p>
+<p>There are also so-called global variables, which can be declared with the <code>global</code> keyword. These can be accessed in any part of the program, even if we split the application into several files. Their regular use is considered bad practice, because particularly in the case of multi-user or multi-threaded applications the changes made to them can easily clash. They are, however, excellently suited to storing constant values. We will not use global variables in our programs.</p>
 <p>In the Python language it is not possible to enforce that the value of a variable remain constant and cannot be changed, but the accepted notation for constant variables is that their name consists entirely of capital letters. Another developer will know about such a variable that its value must not be modified.</p>
 <h2 id="rekurziv-fuggvenyek">Recursive functions</h2>
 <p>In a complex piece of code many functions can appear, which often refer to one another. It may easily be that a seemingly simple instruction in fact sets off a chain of a dozen function calls. These calls can often be difficult to follow, especially for a less experienced programmer. The site <a href="https://pythontutor.com/">pythontutor.com</a> can help with understanding more complex pieces of code with a useful tool. The site lets you run Python code step by step, supplemented with visual help, so that the individual steps become easy to follow.</p>
@@ -1681,7 +1681,7 @@ print(factor(5))
 </code></pre>
 <pre><code>120
 </code></pre>
-<p>Of course this value can also be determined with a loop, but it illustrates the possibilities well. Trying this code out in pythontutor, it can be seen that the <code>factor</code> function is called one after another with smaller and smaller values, right up until its input becomes 1. At that point the call gives 1 as its result, which is received back by the last line of the call with input 2, and multiplied by 2 gives 2 as well &ndash; right up until we get back to the first call, which finally returns the result of 5 x 24.</p>
+<p>Of course this value can also be calculated with a loop, but it illustrates recursion well. If you trace this code in pythontutor, you can see that <code>factor</code> keeps calling itself with smaller and smaller values, until the input reaches 1. That call returns 1, which the call with input 2 uses to return 2 x 1 = 2. This continues back up the chain of calls until we reach the very first call, which finally returns 5 x 24 = 120.</p>
 <p>Grasping and building complex recursive functions can be a challenge even for experienced programmers, but there are problems that are definitely worth approaching with this solution (e.g. mapping out product components, traversing the tags of an HTML document).</p>
 <h2 id="feladatok">Exercises</h2>
 <ol>
@@ -1690,7 +1690,7 @@ print(factor(5))
 <li>Write a function that determines about a given input whether it is a <a href="https://en.wikipedia.org/wiki/Palindrome">palindrome</a> or not!</li>
 <li>Write a function that determines about a given input whether it is an (English-language) <a href="https://en.wikipedia.org/wiki/Pangram">pangram</a> or not! (For this you have to list the letters of the English alphabet in the code yourself!)</li>
 <li>Write a function that calculates the <a href="https://en.wikipedia.org/wiki/Harmonic_mean">harmonic mean</a> of the given numbers from a list input! (Handle the potential incorrect inputs as well!)</li>
-<li>Write a function that determines the greatest common divisor of two numbers with the help of the Euclidean algorithm!</li>
+<li>Write a function that determines the greatest common divisor of two numbers using the Euclidean algorithm!</li>
 </ol>
 
 </article>

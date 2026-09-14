@@ -1383,7 +1383,7 @@ a[href^="https://"]:before {
 </code></pre>
 <pre><code>1
 </code></pre>
-<p>We can also implement this functionality in our own function with the help of a special parameter. This kind of parameter can be mixed with traditional parameters, but there can only ever be one of it, and it has to be the last in the sequence. It exists in both a positional and a keyword variant. The parameter is typically created under the name <code>args</code> (short for arguments), but its name is arbitrary.</p>
+<p>We can also implement this functionality in our own function using a special parameter. This kind of parameter can be mixed with traditional parameters, but there can only ever be one of it, and it has to be the last in the sequence. It exists in both a positional and a keyword variant. The parameter is typically created under the name <code>args</code> (short for arguments), but its name is arbitrary.</p>
 <p>In the case of the <strong>positional</strong> variant a <code>*</code> sign has to be put before the name of the parameter. The parameter variable will be a <a href="../../python_basic/tuple/index.html">tuple</a>. This is a sequential data type which is essentially the immutable variant of the list, so data can only be read out of it and there is no possibility of modification.</p>
 <pre><code class="language-python">def avg(*args):
     sum = 0
@@ -1396,7 +1396,7 @@ avg(2, 5, 1)
 </code></pre>
 <pre><code>2.6666666666666665
 </code></pre>
-<p>In the example we have implemented the average function. The parameter created with the <code>*args</code> notation can simply be referred to under the name <code>args</code>, and we can access its values in the way familiar from lists. With the help of a loop we add up the numbers (regardless of how many were given), and finally we divide the result by their count and display this.</p>
+<p>In the example we have implemented the average function. The parameter created with the <code>*args</code> notation can simply be referred to under the name <code>args</code>, and we can access its values in the way familiar from lists. Using a loop, we add up the numbers (regardless of how many were given), then divide the result by their count and display it.</p>
 <p>A variant well protected with error handling:</p>
 <pre><code class="language-python">def avg( *args ):
     sum = 0

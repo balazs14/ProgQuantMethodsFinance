@@ -1428,7 +1428,7 @@ print(matrix)
 <h2 id="immutabilis-muveletek">Immutable operations</h2>
 <p>From the point of view of the immutable operations there is no essential difference between the sequence types, so the sections below work in exactly the same way for every other type as well (including <a href="../variables_text/index.html">strings</a>).</p>
 <h3 id="lista-elemek-lekerdezese">Querying list elements</h3>
-<p>The individual elements of a list can be queried with the help of the index (ordinal number) they occupy in the order. As in most programming languages, lists in Python are indexed from zero. So the first element of a list can be queried in the following way.</p>
+<p>The individual elements of a list can be queried using the index (ordinal number) they occupy in the order. As in most programming languages, lists in Python are indexed from zero. So the first element of a list can be queried in the following way.</p>
 <pre><code class="language-python">fruits = [&quot;apple&quot;,&quot;banana&quot;,&quot;cherry&quot;,&quot;melon&quot;]
 print(fruits[0])
 </code></pre>
@@ -1464,7 +1464,7 @@ print(fruits[-1])
 </code></pre>
 <pre><code>melon
 </code></pre>
-<p>And with the help of the <code>index</code> function the position of an element in the list can be found out.</p>
+<p>And the <code>index</code> function can find the position of an element in the list.</p>
 <pre><code class="language-python">fruits = [&quot;apple&quot;,&quot;banana&quot;,&quot;cherry&quot;,&quot;melon&quot;]
 print(fruits.index(&quot;banana&quot;))
 </code></pre>
@@ -1497,7 +1497,7 @@ print(fruits)
 </code></pre>
 <p>In the course of joining, essentially a new, third list is created. This is why this operation also works for immutable types.</p>
 <h3 id="kereses-a-listaban">Searching in a list</h3>
-<p>With the help of the <code>in</code> keyword it can be checked whether a list contains the given value. The result of the keyword is a <a href="../variables_bool/index.html">boolean value</a>, so it can be used, for example, in a <a href="../if_statement/index.html">conditional statement</a>.</p>
+<p>The <code>in</code> keyword can check whether a list contains a given value. The result of the keyword is a <a href="../variables_bool/index.html">boolean value</a>, so it can be used, for example, in a <a href="../if_statement/index.html">conditional statement</a>.</p>
 <pre><code class="language-python">fruits = [&quot;apple&quot;,&quot;banana&quot;,&quot;cherry&quot;,&quot;melon&quot;]
 if &quot;banana&quot; in fruits:
     print(&quot;There is a banana&quot;)
@@ -1542,7 +1542,7 @@ print(fruits)
 </code></pre>
 <pre><code>['apple', 'banana', 'cherry', 'melon']
 </code></pre>
-<p>And with the help of the <code>insert()</code> function an element can be inserted at a given position.</p>
+<p>And the <code>insert()</code> function can insert an element at a given position.</p>
 <pre><code class="language-python">fruits = [&quot;apple&quot;,&quot;banana&quot;,&quot;cherry&quot;,&quot;melon&quot;]
 fruits.insert(1, &quot;*BANANA*&quot;)
 print(fruits)
@@ -1571,7 +1571,7 @@ print(f&quot;The removed item is \&quot;{removed_item}\&quot;&quot;)
 </code></pre>
 <pre><code>The removed item is &quot;banana&quot;
 </code></pre>
-<p>And with the help of the <code>remove</code> method elements can be deleted on the basis of their value. Only the very first occurrence of the value is deleted from the list.</p>
+<p>And the <code>remove</code> method deletes elements based on their value. Only the very first occurrence of the value is deleted from the list.</p>
 <pre><code class="language-python">fruits = [&quot;apple&quot;,&quot;banana&quot;,&quot;cherry&quot;,&quot;melon&quot;]
 fruits.remove(&quot;cherry&quot;)
 print(fruits)
@@ -1599,7 +1599,7 @@ print(fruits)
 <pre><code>[]
 </code></pre>
 <h3 id="listak-sorba-rendezese">Sorting lists</h3>
-<p>With the help of the <code>sort()</code> method we can arrange the values of our list into the natural order of the given variable type. This natural order is, for example in the case of text, alphabetical order.</p>
+<p>The <code>sort()</code> method arranges the values of our list into the natural order of the given variable type. This natural order is, for example in the case of text, alphabetical order.</p>
 <pre><code class="language-python">cars = ['Ford', 'Mitsubishi', 'BMW', 'VW']
 cars.sort()
 print(cars)
@@ -1613,7 +1613,7 @@ print(cars)
 </code></pre>
 <pre><code>['VW', 'Mitsubishi', 'Ford', 'BMW']
 </code></pre>
-<p>In the case where our elements have no default order &ndash; for example if we have mixed elements of different data types in the list &ndash; a function can be given with the help of the <code>key</code> parameter which assigns to the current element a value that can be put in order, and then <code>sort</code> orders according to this value.</p>
+<p>In the case where our elements have no default order &ndash; for example if we have mixed elements of different data types in the list &ndash; we can pass a function through the <code>key</code> parameter, which assigns each element an orderable value, and <code>sort</code> then sorts by that value.</p>
 <p>Functions, however, will be discussed later; this code fragment has been put here only for the sake of completeness!</p>
 <p>In the example below we want to sort by the length of the text, instead of alphabetical order. For this, as a first step, we create a function called <code>myFunc</code>, which returns the length of the value received as a parameter. The <code>sort()</code> method of the list carries out the <code>myFunc</code> function on every element of the list and orders the elements on the basis of the value returned by the function.</p>
 <pre><code class="language-python"># A function that returns the length of the value:
