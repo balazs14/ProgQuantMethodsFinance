@@ -71,5 +71,13 @@
     "statusBar.foreground": "#f9fafb",
     "titleBar.activeBackground": "#111827",
     "titleBar.activeForeground": "#f9fafb"
-  }
+  },
+  "editor.quickSuggestions": {
+    "other": "off",
+    "comments": "off",
+      "strings": "off"
+  },
+  "editor.suggestOnTriggerCharacters": false,
+  "editor.wordBasedSuggestions": "off",
+  "editor.parameterHints.enabled": false
 }
