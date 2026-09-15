@@ -5,3 +5,4 @@ build/
 *.pdf
 .DS_Store
 __pycache__
+.ai-extension-detected

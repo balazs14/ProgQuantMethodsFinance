@@ -14,29 +14,7 @@
   "files.autoSaveDelay": 1000,
   "r.alwaysUseActiveTerminal": true,
   "r.bracketedPaste": true,
-  "terminal.integrated.profiles.osx": {
-    "bash (restricted)": {
-      "path": "/bin/bash",
-      "args": ["--rcfile", "${workspaceFolder}/.vscode/terminal-rc.sh", "-i"]
-    }
-  },
-  "terminal.integrated.profiles.linux": {
-    "bash (restricted)": {
-      "path": "/bin/bash",
-      "args": ["--rcfile", "${workspaceFolder}/.vscode/terminal-rc.sh", "-i"]
-    }
-  },
-  "terminal.integrated.profiles.windows": {
-    "PowerShell (restricted)": {
-      "path": "pwsh",
-      "args": [
-        "-NoProfile",
-        "-Command",
-        ". '${workspaceFolder}\\.vscode\\terminal-rc.ps1'"
-      ],
-      "overrideName": true
-    }
-  },
+
   "extensions.allowed": {
     "github.copilot": false,
     "github.copilot-chat": false,
@@ -57,16 +35,7 @@
     "*": true
   },
   "telemetry.telemetryLevel": "off",
-  "workbench.colorCustomizations": {
-    "statusBar.background": "#ff1493",
-    "statusBar.foreground": "#ffffff",
-    "titleBar.activeBackground": "#ff1493",
-    "titleBar.activeForeground": "#ffffff",
-    "activityBar.background": "#ff1493",
-    "activityBar.foreground": "#ffffff",
-    "sideBar.background": "#ffb6c1",
-    "sideBar.foreground": "#000000"
-  },
+
   "editor.quickSuggestions": {
     "other": "off",
     "comments": "off",
@@ -75,8 +44,5 @@
   "editor.suggestOnTriggerCharacters": false,
   "editor.wordBasedSuggestions": "off",
   "editor.parameterHints.enabled": false,
-  //"terminal.integrated.defaultProfile.osx": "bash (restricted)",
-  //"terminal.integrated.defaultProfile.linux": "bash (restricted)",
-  //"terminal.integrated.defaultProfile.windows": "PowerShell (restricted)",
   "terminal.integrated.enablePersistentSessions": false
 }

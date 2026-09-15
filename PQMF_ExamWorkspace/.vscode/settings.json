@@ -1,7 +1,9 @@
 {
   "chat.disableAIFeatures": true,
   "chat.commandCenter.enabled": false,
-  "github.copilot.enable": { "*": false },
+  "github.copilot.enable": {
+    "*": false
+  },
   "github.copilot.inlineSuggest.enable": false,
   "github.copilot.nextEditSuggestions.enabled": false,
   "github.copilot.editor.enableCodeActions": false,
@@ -17,13 +19,21 @@
   "terminal.integrated.profiles.osx": {
     "bash (restricted)": {
       "path": "/bin/bash",
-      "args": ["--rcfile", "${workspaceFolder}/.vscode/terminal-rc.sh", "-i"]
+      "args": [
+        "--rcfile",
+        "${workspaceFolder}/.vscode/terminal-rc.sh",
+        "-i"
+      ]
     }
   },
   "terminal.integrated.profiles.linux": {
     "bash (restricted)": {
       "path": "/bin/bash",
-      "args": ["--rcfile", "${workspaceFolder}/.vscode/terminal-rc.sh", "-i"]
+      "args": [
+        "--rcfile",
+        "${workspaceFolder}/.vscode/terminal-rc.sh",
+        "-i"
+      ]
     }
   },
   "terminal.integrated.profiles.windows": {
@@ -58,14 +68,12 @@
   },
   "telemetry.telemetryLevel": "off",
   "workbench.colorCustomizations": {
-    "statusBar.background": "#ff1493",
-    "statusBar.foreground": "#ffffff",
-    "titleBar.activeBackground": "#ff1493",
-    "titleBar.activeForeground": "#ffffff",
-    "activityBar.background": "#ff1493",
-    "activityBar.foreground": "#ffffff",
-    "sideBar.background": "#ffb6c1",
-    "sideBar.foreground": "#000000"
+    "statusBar.background": "#1f2937",
+    "statusBar.foreground": "#f9fafb",
+    "titleBar.activeBackground": "#111827",
+    "titleBar.activeForeground": "#f9fafb",
+    "activityBar.background": "#1f2937",
+    "activityBar.foreground": "#f9fafb"
   },
   "editor.quickSuggestions": {
     "other": "off",
