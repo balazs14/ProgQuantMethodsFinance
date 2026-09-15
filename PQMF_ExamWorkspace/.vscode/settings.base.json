@@ -1,21 +1,19 @@
 {
   "chat.disableAIFeatures": true,
   "chat.commandCenter.enabled": false,
-
   "github.copilot.enable": { "*": false },
   "github.copilot.inlineSuggest.enable": false,
   "github.copilot.nextEditSuggestions.enabled": false,
   "github.copilot.editor.enableCodeActions": false,
-
   "editor.inlineSuggest.enabled": false,
   "editor.inlineSuggest.suppressSuggestions": true,
   "editor.inlineSuggest.edits.showCollapsed": true,
   "vsintellicode.modify.editor.suggestSelection": "disabled",
-
   "extensions.ignoreRecommendations": false,
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
   "r.alwaysUseActiveTerminal": true,
   "r.bracketedPaste": true,
-
   "terminal.integrated.profiles.osx": {
     "bash (restricted)": {
       "path": "/bin/bash",
@@ -28,9 +26,6 @@
       "args": ["--rcfile", "${workspaceFolder}/.vscode/terminal-rc.sh", "-i"]
     }
   },
-  "terminal.integrated.defaultProfile.osx": "bash (restricted)",
-  "terminal.integrated.defaultProfile.linux": "bash (restricted)",
-
   "terminal.integrated.profiles.windows": {
     "PowerShell (restricted)": {
       "path": "pwsh",
@@ -42,8 +37,6 @@
       "overrideName": true
     }
   },
-  "terminal.integrated.defaultProfile.windows": "PowerShell (restricted)",
-
   "extensions.allowed": {
     "github.copilot": false,
     "github.copilot-chat": false,
@@ -63,9 +56,7 @@
     "bito.bito": false,
     "*": true
   },
-
   "telemetry.telemetryLevel": "off",
-
   "workbench.colorCustomizations": {
     "statusBar.background": "#1f2937",
     "statusBar.foreground": "#f9fafb",
@@ -75,9 +66,13 @@
   "editor.quickSuggestions": {
     "other": "off",
     "comments": "off",
-      "strings": "off"
+    "strings": "off"
   },
   "editor.suggestOnTriggerCharacters": false,
   "editor.wordBasedSuggestions": "off",
-  "editor.parameterHints.enabled": false
+  "editor.parameterHints.enabled": false,
+  "terminal.integrated.defaultProfile.osx": "bash (restricted)",
+  "terminal.integrated.defaultProfile.linux": "bash (restricted)",
+  "terminal.integrated.defaultProfile.windows": "PowerShell (restricted)",
+  "terminal.integrated.enablePersistentSessions": false
 }
