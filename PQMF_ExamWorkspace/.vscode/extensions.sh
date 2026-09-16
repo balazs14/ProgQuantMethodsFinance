@@ -29,6 +29,7 @@ with open(base_path) as f:
     settings = json.load(f)
 
 settings["workbench.colorCustomizations"] = {
+    "editor.background": "#0f2747",
     "statusBar.background": "#1f2937",
     "statusBar.foreground": "#f9fafb",
     "titleBar.activeBackground": "#111827",
@@ -65,6 +66,7 @@ PINK_COLORS = {
 }
 
 NORMAL_COLORS = {
+    "editor.background": "#0f2747",
     "statusBar.background": "#1f2937",
     "statusBar.foreground": "#f9fafb",
     "titleBar.activeBackground": "#111827",

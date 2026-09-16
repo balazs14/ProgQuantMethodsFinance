@@ -6,7 +6,7 @@
       "type": "shell",
       "command": "${command:workbench.action.terminal.sendSequence}",
       "windows": {
-        "command": "pwsh -NoProfile -Command \"& '${workspaceFolder}\\.vscode\\extensions.ps1' 'check'\""
+        "command": "& '${workspaceFolder}\\.vscode\\extensions.ps1' 'check'"
       },
       "osx": {
         "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\" check"
@@ -23,7 +23,7 @@
       "label": "Restricted mode: watch AI usage",
       "type": "shell",
       "windows": {
-        "command": "pwsh -NoProfile -Command \"& '${workspaceFolder}\\.vscode\\extensions.ps1' 'watch'\""
+        "command": "& '${workspaceFolder}\\.vscode\\extensions.ps1' 'watch'"
       },
       "osx": {
         "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\" --watch"
@@ -41,7 +41,7 @@
       "label": "Restricted mode: instructor reset (disable AI & restore theme)",
       "type": "shell",
       "windows": {
-        "command": "pwsh -NoProfile -Command \"& '${workspaceFolder}\\.vscode\\extensions.ps1' 'reset'\""
+        "command": "& '${workspaceFolder}\\.vscode\\extensions.ps1' 'reset'"
       },
       "osx": {
         "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\" --reset"
