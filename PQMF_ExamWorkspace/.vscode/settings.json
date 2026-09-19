@@ -19,21 +19,13 @@
   "terminal.integrated.profiles.osx": {
     "bash (restricted)": {
       "path": "/bin/bash",
-      "args": [
-        "--rcfile",
-        "${workspaceFolder}/.vscode/terminal-rc.sh",
-        "-i"
-      ]
+      "args": ["--rcfile", "${workspaceFolder}/.vscode/terminal-rc.sh", "-i"]
     }
   },
   "terminal.integrated.profiles.linux": {
     "bash (restricted)": {
       "path": "/bin/bash",
-      "args": [
-        "--rcfile",
-        "${workspaceFolder}/.vscode/terminal-rc.sh",
-        "-i"
-      ]
+      "args": ["--rcfile", "${workspaceFolder}/.vscode/terminal-rc.sh", "-i"]
     }
   },
   "terminal.integrated.profiles.windows": {
@@ -64,11 +56,26 @@
     "supermaven.supermaven": false,
     "augment.vscode-augment": false,
     "bito.bito": false,
+    "vscode.simple-browser": false,
+    "vscode.image-preview": false,
+    "vscode.markdown-language-features": false,
     "*": true
+  },
+  "workbench.editorAssociations": {
+    "*.md": "default",
+    "*.png": "default",
+    "*.jpg": "default",
+    "*.jpeg": "default",
+    "*.gif": "default",
+    "*.bmp": "default",
+    "*.svg": "default",
+    "*.pdf": "default"
   },
   "telemetry.telemetryLevel": "off",
   "workbench.colorCustomizations": {
-    "editor.background": "#0f2747",
+    "editor.background": "#183D2F",
+    "notebook.editorBackground": "#183D2F",
+    "notebook.cellEditorBackground": "#1e1e1e",
     "statusBar.background": "#1f2937",
     "statusBar.foreground": "#f9fafb",
     "titleBar.activeBackground": "#111827",

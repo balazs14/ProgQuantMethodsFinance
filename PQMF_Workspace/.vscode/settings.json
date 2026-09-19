@@ -1,5 +1,5 @@
 {
-  "chat.disableAIFeatures": false,
+  "chat.disableAIFeatures": true,
   "chat.commandCenter.enabled": false,
   "github.copilot.enable": { "*": false },
   "github.copilot.inlineSuggest.enable": false,
@@ -48,6 +48,8 @@
 
   "workbench.secondarySideBar.defaultVisibility": "hidden",
   "workbench.colorCustomizations": {
-    "notebook.editorBackground": "#183D2F"
+    "editor.background": "#0f2747",
+    "notebook.editorBackground": "#0f2747",
+    "notebook.cellEditorBackground": "#1e1e1e"
   }
 }

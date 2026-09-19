@@ -17,6 +17,9 @@
       "runOptions": {
         "runOn": "folderOpen"
       },
+      "presentation": {
+        "reveal": "never"
+      },
       "problemMatcher": []
     },
     {
@@ -35,6 +38,32 @@
         "runOn": "folderOpen"
       },
       "isBackground": true,
+      "presentation": {
+        "reveal": "never"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Restricted mode: student terminal",
+      "type": "shell",
+      "windows": {
+        "command": "pwsh -NoProfile -Command \". '${workspaceFolder}\\.vscode\\terminal-rc.ps1'\""
+      },
+      "osx": {
+        "command": "bash --rcfile \"${workspaceFolder}/.vscode/terminal-rc.sh\" -i"
+      },
+      "linux": {
+        "command": "bash --rcfile \"${workspaceFolder}/.vscode/terminal-rc.sh\" -i"
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "focus": true,
+        "panel": "dedicated"
+      },
       "problemMatcher": []
     },
     {

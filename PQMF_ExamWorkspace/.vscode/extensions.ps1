@@ -50,8 +50,19 @@ base_path, settings_path = sys.argv[1], sys.argv[2]
 with open(base_path) as f:
     settings = json.load(f)
 
+try:
+    with open(settings_path) as f:
+        previous_settings = json.load(f)
+except Exception:
+    previous_settings = {}
+
+if "python.defaultInterpreterPath" in previous_settings:
+    settings["python.defaultInterpreterPath"] = previous_settings["python.defaultInterpreterPath"]
+
 settings["workbench.colorCustomizations"] = {
-    "editor.background": "#0f2747",
+    "editor.background": "#183D2F",
+    "notebook.editorBackground": "#183D2F",
+    "notebook.cellEditorBackground": "#1e1e1e",
     "statusBar.background": "#1f2937",
     "statusBar.foreground": "#f9fafb",
     "titleBar.activeBackground": "#111827",
@@ -90,7 +101,9 @@ PINK_COLORS = {
 }
 
 NORMAL_COLORS = {
-    "editor.background": "#0f2747",
+    "editor.background": "#183D2F",
+    "notebook.editorBackground": "#183D2F",
+    "notebook.cellEditorBackground": "#1e1e1e",
     "statusBar.background": "#1f2937",
     "statusBar.foreground": "#f9fafb",
     "titleBar.activeBackground": "#111827",
@@ -141,6 +154,9 @@ if violation_detected:
     target_settings = dict(base_settings)
     target_settings["workbench.colorCustomizations"] = PINK_COLORS
 
+    if "python.defaultInterpreterPath" in current_settings:
+        target_settings["python.defaultInterpreterPath"] = current_settings["python.defaultInterpreterPath"]
+
     if current_settings != target_settings:
         with open(settings_path, "w") as f:
             json.dump(target_settings, f, indent=2)
@@ -149,6 +165,8 @@ if violation_detected:
 else:
     target_settings = dict(base_settings)
     target_settings["workbench.colorCustomizations"] = NORMAL_COLORS
+    if "python.defaultInterpreterPath" in current_settings:
+        target_settings["python.defaultInterpreterPath"] = current_settings["python.defaultInterpreterPath"]
     if current_settings != target_settings:
         with open(settings_path, "w") as f:
             json.dump(target_settings, f, indent=2)
