@@ -2,7 +2,7 @@
   "name": "pqmf-exam-guard",
   "displayName": "PQMF Exam Guard",
   "description": "Guards PQMF exam workspaces by detecting files opened outside the workspace.",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "publisher": "pqmf",
   "engines": {
     "vscode": "^1.90.0"
@@ -30,11 +30,6 @@
     "configuration": {
       "title": "PQMF Exam Guard",
       "properties": {
-        "pqmfExamGuard.enabled": {
-          "type": "boolean",
-          "default": false,
-          "description": "Detect files opened outside the current PQMF exam workspace."
-        },
         "pqmfExamGuard.disableOutOfFocusCheck": {
           "type": "boolean",
           "default": false,

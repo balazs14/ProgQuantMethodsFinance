@@ -5,11 +5,11 @@
       "mode": 292
     },
     ".vscode/extensions.sh": {
-      "sha256": "bb5c4b0542b9a4680f569f82db4f6edcc061a593ff68cce39d094818194a3151",
+      "sha256": "40249af52560c85ebde9570e3eab65875f284bb8f123939b27f53c4f6c209aaf",
       "mode": 365
     },
     ".vscode/extensions.ps1": {
-      "sha256": "bfd8aef8fa26773dba8796df692d41b2c7036475b8f95093b05f76d681d20483",
+      "sha256": "4f3c8796e316df409bc0095229ed546c92a2a9cdb915b25f95fe39840b7c59c8",
       "mode": 292
     },
     ".vscode/extensions.json": {
@@ -25,7 +25,7 @@
       "mode": 292
     },
     ".vscode/settings.base.json": {
-      "sha256": "9db3ab82fc2d47f539ceeaff18607c0b859af757d5d9e79d2b19463b248788ab",
+      "sha256": "79c2488cede962112b34d675e6137f93e51476df7eba7d75744e7a709a13a709",
       "mode": 292
     },
     ".vscode/tasks.json": {

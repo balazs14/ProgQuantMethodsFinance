@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011">
   <Metadata>
-    <Identity Language="en-US" Id="pqmf-exam-guard" Version="0.0.11" Publisher="pqmf" />
+    <Identity Language="en-US" Id="pqmf-exam-guard" Version="0.0.12" Publisher="pqmf" />
     <DisplayName>PQMF Exam Guard</DisplayName>
     <Description xml:space="preserve">Guards PQMF exam workspaces by detecting files opened outside the workspace.</Description>
     <Tags>vscode,exam</Tags>

@@ -23,7 +23,6 @@ const RUNTIME_VSCODE_FILES = new Set([
   `.vscode/${GUARD_LOG}`,
 ]);
 const POLICY_KEYS = [
-  "pqmfExamGuard.enabled",
   "chat.disableAIFeatures",
   "chat.commandCenter.enabled",
   "github.copilot.enable",
@@ -106,7 +105,13 @@ function isExamWorkspace(root = workspaceRoot()) {
   }
   const settings =
     baseSettings(root) || readJson(path.join(vscodeDir(root), "settings.json"));
-  return settings && settings["pqmfExamGuard.enabled"] === true;
+  return (
+    settings &&
+    Object.prototype.hasOwnProperty.call(
+      settings,
+      OUTSIDE_WORKSPACE_CHECK_DISABLED_KEY,
+    )
+  );
 }
 
 function normalizePath(filePath) {
@@ -491,7 +496,7 @@ function checkUri(uri) {
     !root ||
     !isExamWorkspace(root) ||
     vscode.workspace
-      .getConfiguration("pqmfExamGuard")
+      .getConfiguration()
       .get(OUTSIDE_WORKSPACE_CHECK_DISABLED_KEY, false) ||
     launcherSetupInProgress(root) ||
     !uri ||
@@ -548,7 +553,7 @@ function installTerminalDefense(context) {
 
 function outOfFocusCheckEnabled() {
   return !vscode.workspace
-    .getConfiguration("pqmfExamGuard")
+    .getConfiguration()
     .get(OUT_OF_FOCUS_CHECK_DISABLED_KEY, false);
 }
 
