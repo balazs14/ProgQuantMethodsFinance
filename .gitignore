@@ -8,3 +8,4 @@ __pycache__
 .ai-extension-detected
 disable_outside_workspace_check=false
 tools/pqmf-exam-guard-vsix/extension/workspace-snapshot/
+PQMF_ExamWorkspace/.vscode/pqmf-exam-guard.vsix
