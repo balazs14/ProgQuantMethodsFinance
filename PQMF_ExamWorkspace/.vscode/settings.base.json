@@ -31,6 +31,7 @@
       "path": "pwsh",
       "args": [
         "-NoProfile",
+        "-NoExit",
         "-Command",
         ". '${workspaceFolder}\\.vscode\\terminal-rc.ps1'"
       ],
@@ -58,6 +59,12 @@
     "vscode.image-preview": false,
     "vscode.markdown-language-features": false,
     "*": true
+  },
+  "files.exclude": {
+    ".vscode": true
+  },
+  "search.exclude": {
+    ".vscode": true
   },
   "workbench.editorAssociations": {
     "*.md": "default",

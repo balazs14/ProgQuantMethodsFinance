@@ -12,6 +12,10 @@ $workspaceRoot = Split-Path -Parent $vscodeDir
 $baseSettings = Join-Path $vscodeDir "settings.base.json"
 $settingsFile = Join-Path $vscodeDir "settings.json"
 $markerFile = Join-Path $vscodeDir ".ai-extension-detected"
+$extensionHeartbeat = Join-Path $vscodeDir ".pqmf-exam-guard-extension-heartbeat"
+$scriptHeartbeat = Join-Path $vscodeDir ".pqmf-exam-guard-script-heartbeat"
+$guardLog = Join-Path $vscodeDir ".pqmf-exam-guard.log"
+$watchStarted = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
 
 # Helper to find Python in venv or system
 function Get-PythonExe {
@@ -41,6 +45,9 @@ function Get-PythonExe {
 $pythonExe = Get-PythonExe
 
 if ($Mode -eq "reset") {
+    # Give the extension watchdog time to reconstruct any deleted protected
+    # files before this legacy reset path clears the persistent marker.
+    Start-Sleep -Seconds 10
     Remove-Item -Path $markerFile -ErrorAction SilentlyContinue
     
     $pythonCode = @'
@@ -77,17 +84,50 @@ with open(settings_path, "w") as f:
 '@
 
     & $pythonExe -c $pythonCode $baseSettings $settingsFile
+    $logItem = Get-Item -LiteralPath $guardLog -Force -ErrorAction SilentlyContinue
+    if ($logItem) { $logItem.IsReadOnly = $false }
+    Add-Content -LiteralPath $guardLog -Value "$([DateTime]::UtcNow.ToString('o')) [script] RESET Legacy instructor reset restored settings and normal colors."
     Write-Host "✓ Workspace reset complete: AI features disabled and normal colors restored." -ForegroundColor Green
     exit 0
 }
 
 function Invoke-Check {
     $pythonCode = @'
-import os, sys, json
+import os, sys, json, time
 
 base_path = sys.argv[1]
 settings_path = sys.argv[2]
 marker_path = sys.argv[3]
+extension_heartbeat = sys.argv[4]
+script_heartbeat = sys.argv[5]
+mode = sys.argv[6]
+watch_started = float(sys.argv[7])
+log_path = sys.argv[8]
+
+def log_event(level, message):
+    entry = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    entry += f" [script] {level} {str(message).replace(chr(10), ' | ')}\n"
+    try:
+        with open(log_path, "a") as log_file:
+            log_file.write(entry)
+    except Exception:
+        try:
+            os.chmod(log_path, 0o644)
+            with open(log_path, "a") as log_file:
+                log_file.write(entry)
+        except Exception:
+            pass
+
+try:
+    with open(script_heartbeat, "w") as heartbeat_file:
+        heartbeat_file.write(f"{time.time()}\n")
+except Exception:
+    try:
+        os.chmod(script_heartbeat, 0o644)
+        with open(script_heartbeat, "w") as heartbeat_file:
+            heartbeat_file.write(f"{time.time()}\n")
+    except Exception:
+        pass
 
 PINK_COLORS = {
     "statusBar.background": "#ff1493",
@@ -119,6 +159,7 @@ except Exception:
     base_settings = {}
 
 violation_detected = os.path.exists(marker_path)
+violation_reason = None
 
 current_settings = {}
 if os.path.exists(settings_path):
@@ -132,28 +173,53 @@ if os.path.exists(settings_path):
         print("SKIP")
         sys.exit(0)
 
-if not violation_detected:
-    if current_settings.get("chat.disableAIFeatures") is False:
+policy_keys = (
+    "chat.disableAIFeatures",
+    "chat.commandCenter.enabled",
+    "github.copilot.enable",
+    "github.copilot.inlineSuggest.enable",
+    "github.copilot.nextEditSuggestions.enabled",
+    "github.copilot.editor.enableCodeActions",
+    "editor.inlineSuggest.enabled",
+    "editor.inlineSuggest.suppressSuggestions",
+    "extensions.allowed",
+    "files.exclude",
+    "search.exclude",
+)
+protected_defaults = base_settings.get("pqmfExamGuard.protectedSettings", {})
+
+if not violation_detected and any(
+    current_settings.get(key) != base_settings.get(key) for key in policy_keys
+):
+    violation_detected = True
+    violation_reason = "Protected exam settings were changed."
+
+if not violation_detected and any(
+    current_settings.get(key) != value for key, value in protected_defaults.items()
+):
+    violation_detected = True
+    violation_reason = "Protected exam settings were changed."
+
+if not violation_detected and mode == "watch" and time.time() - watch_started >= 20:
+    try:
+        heartbeat_age = time.time() - os.path.getmtime(extension_heartbeat)
+        if heartbeat_age > 20:
+            violation_detected = True
+            violation_reason = "Exam guard extension heartbeat is stale."
+    except OSError:
         violation_detected = True
-    elif current_settings.get("editor.inlineSuggest.enabled") is True:
-        violation_detected = True
-    elif current_settings.get("github.copilot.inlineSuggest.enable") is True:
-        violation_detected = True
-    elif current_settings.get("github.copilot.nextEditSuggestions.enabled") is True:
-        violation_detected = True
-    elif current_settings.get("github.copilot.editor.enableCodeActions") is True:
-        violation_detected = True
-    elif isinstance(current_settings.get("github.copilot.enable"), dict) and any(current_settings.get("github.copilot.enable").values()):
-        violation_detected = True
-    elif isinstance(current_settings.get("extensions.allowed"), dict) and any(val is True for k, val in current_settings.get("extensions.allowed").items() if k != "*"):
-        violation_detected = True
+        violation_reason = "Exam guard extension heartbeat is missing."
 
 if violation_detected:
+    new_violation = not os.path.exists(marker_path)
     try:
-        with open(marker_path, "w") as f:
-            f.write("AI usage detected in workspace\n")
+        if new_violation:
+            with open(marker_path, "w") as f:
+                f.write((violation_reason or "Exam policy violation detected.") + "\n")
     except Exception:
         pass
+    if new_violation:
+        log_event("VIOLATION", violation_reason or "Exam policy violation detected.")
 
     target_settings = dict(base_settings)
     target_settings["workbench.colorCustomizations"] = PINK_COLORS
@@ -178,13 +244,14 @@ else:
     print("OK")
 '@
 
-    $output = & $pythonExe -c $pythonCode $baseSettings $settingsFile $markerFile
+    $output = & $pythonExe -c $pythonCode $baseSettings $settingsFile $markerFile `
+        $extensionHeartbeat $scriptHeartbeat $Mode $watchStarted $guardLog
     return $output.Trim()
 }
 
 function Invoke-CheckLocked {
     $mutex = New-Object System.Threading.Mutex($false, "PQMFExamExtensionsCheck")
-    $null = $mutex.WaitOne(10000)
+    $null = $mutex.WaitOne(20000)
     try {
         return Invoke-Check
     }
@@ -203,7 +270,7 @@ if ($Mode -eq "watch") {
 else {
     $result = Invoke-CheckLocked
     if ($result -eq "VIOLATION") {
-        Write-Host "⚠️ AI usage detected! Workspace glowing pink until instructor reset task is run." -ForegroundColor Red
+        Write-Host "⚠️ AI usage detected! Workspace glowing pink until instructor reset task is run. See Output > PQMF Exam Guard." -ForegroundColor Red
     }
     elseif ($result -eq "SKIP") {
         Write-Host "… Settings file busy, retry the check in a moment." -ForegroundColor Yellow

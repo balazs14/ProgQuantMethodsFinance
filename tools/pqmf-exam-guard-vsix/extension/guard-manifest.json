@@ -1,0 +1,36 @@
+{
+  "files": {
+    ".vscode/CROSS_PLATFORM.md": {
+      "sha256": "6a71d1d72da51564c1db91390424377f9b7ba7736ddfd69bbb255d60c22a43ce",
+      "mode": 292
+    },
+    ".vscode/extensions.sh": {
+      "sha256": "bb5c4b0542b9a4680f569f82db4f6edcc061a593ff68cce39d094818194a3151",
+      "mode": 365
+    },
+    ".vscode/extensions.ps1": {
+      "sha256": "bfd8aef8fa26773dba8796df692d41b2c7036475b8f95093b05f76d681d20483",
+      "mode": 292
+    },
+    ".vscode/extensions.json": {
+      "sha256": "e9da3b8600701440904bb1cb5fbe352ba343bc351809652ce035cb43402b1789",
+      "mode": 292
+    },
+    ".vscode/terminal-rc.sh": {
+      "sha256": "a1768ec28e61bbf2d8519911fc482b3680adde5d8c7d1449640732c3a3c74765",
+      "mode": 292
+    },
+    ".vscode/terminal-rc.ps1": {
+      "sha256": "c4c7b29f5ac47f65b0bdb213a21ea41f195b2ce1339039c210bb657903f7ffaa",
+      "mode": 292
+    },
+    ".vscode/settings.base.json": {
+      "sha256": "9db3ab82fc2d47f539ceeaff18607c0b859af757d5d9e79d2b19463b248788ab",
+      "mode": 292
+    },
+    ".vscode/tasks.json": {
+      "sha256": "ced362377847cc877861e2f5d5899cd441291c6ca0064e0558d6d4bb4ae53880",
+      "mode": 292
+    }
+  }
+}

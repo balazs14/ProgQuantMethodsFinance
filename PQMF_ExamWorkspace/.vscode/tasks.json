@@ -47,7 +47,7 @@
       "label": "Restricted mode: student terminal",
       "type": "shell",
       "windows": {
-        "command": "pwsh -NoProfile -Command \". '${workspaceFolder}\\.vscode\\terminal-rc.ps1'\""
+        "command": "pwsh -NoProfile -NoExit -Command \". '${workspaceFolder}\\.vscode\\terminal-rc.ps1'\""
       },
       "osx": {
         "command": "bash --rcfile \"${workspaceFolder}/.vscode/terminal-rc.sh\" -i"
@@ -67,17 +67,9 @@
       "problemMatcher": []
     },
     {
-      "label": "Restricted mode: instructor reset (disable AI & restore theme)",
+      "label": "Restricted mode: instructor reset (repair files & restore theme)",
       "type": "shell",
-      "windows": {
-        "command": "& '${workspaceFolder}\\.vscode\\extensions.ps1' 'reset'"
-      },
-      "osx": {
-        "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\" --reset"
-      },
-      "linux": {
-        "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\" --reset"
-      },
+      "command": "${command:pqmfExamGuard.instructorReset}",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",

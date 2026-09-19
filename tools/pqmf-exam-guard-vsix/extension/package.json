@@ -1,0 +1,51 @@
+{
+  "name": "pqmf-exam-guard",
+  "displayName": "PQMF Exam Guard",
+  "description": "Guards PQMF exam workspaces by detecting files opened outside the workspace.",
+  "version": "0.0.11",
+  "publisher": "pqmf",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onDidOpenTextDocument",
+    "onNotebook:jupyter-notebook"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "pqmfExamGuard.instructorReset",
+        "title": "PQMF Exam Guard: Instructor Reset"
+      },
+      {
+        "command": "pqmfExamGuard.showLog",
+        "title": "PQMF Exam Guard: Show Log"
+      }
+    ],
+    "configuration": {
+      "title": "PQMF Exam Guard",
+      "properties": {
+        "pqmfExamGuard.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Detect files opened outside the current PQMF exam workspace."
+        },
+        "pqmfExamGuard.disableOutOfFocusCheck": {
+          "type": "boolean",
+          "default": false,
+          "description": "Disable the VS Code out-of-focus violation check while the exam workspace is active."
+        },
+        "pqmfExamGuard.disableOutsideWorkspaceCheck": {
+          "type": "boolean",
+          "default": false,
+          "description": "Disable violations when files outside the exam workspace are opened."
+        }
+      }
+    }
+  }
+}
