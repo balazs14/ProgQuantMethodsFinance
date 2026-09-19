@@ -39,6 +39,7 @@ read -r -d '' ROBUST_LAUNCHER_TEMPLATE << 'EOF'
 :; PROJECT_DIR=$(dirname "$VSCODE_DIR")
 :; find "$PROJECT_DIR" -type f -name "*.ipynb" -exec "$PYTHON_CMD" -c "import hashlib,json,sys; p=sys.argv[1]; d=json.load(open(p)); d.setdefault('metadata', {})['vscode'] = {'interpreter': {'hash': hashlib.sha256(sys.argv[2].encode()).hexdigest()}}; json.dump(d, open(p, 'w'), indent=1)" {} "$PYTHON_PATH" \;
 :; if [ -f "$PROJECT_DIR/.vscode/settings.json" ]; then "$PYTHON_CMD" -c "import json,sys; p=sys.argv[1]; d=json.load(open(p)); d['python.defaultInterpreterPath']=sys.argv[2]; json.dump(d, open(p,'w'), indent=2)" "$PROJECT_DIR/.vscode/settings.json" "$PYTHON_PATH"; fi
+:; if [ -f "$PROJECT_DIR/.vscode/pqmf-exam-guard.vsix" ]; then echo "Installing exam guard extension..."; "$CODE_CMD" --install-extension "$PROJECT_DIR/.vscode/pqmf-exam-guard.vsix" --force >/dev/null 2>&1 || alert "Extension setup failed" "Could not install the bundled exam guard extension."; fi
 :; echo "Opening: $PROJECT_DIR"
 :; "$CODE_CMD" --disable-workspace-trust --reuse-window "$PROJECT_DIR"
 :; if [ "$(uname)" = "Darwin" ]; then osascript -e "tell application \"Terminal\" to close (every window whose selected tab's tty is \"$(tty)\")" >/dev/null 2>&1; fi
@@ -104,6 +105,8 @@ function make_workspace() {
     rm -fr "$foldername" || { echo "FAILED: cleanup of $foldername"; return 1; }
     mkdir -p "$foldername" || { echo "FAILED: mkdir $foldername"; return 1; }
     cp -r $material  PQMF_$origin/.vscode  "$foldername/" || { echo "FAILED: copying material/.vscode into $foldername"; return 1; }
+    # Never ship a stray violation marker left over from local testing.
+    rm -f "$foldername/.vscode/.ai-extension-detected" "$foldername/.vscode/.ai-extension-detected.outside-file"
     python3 - "$foldername" <<'PY' || { echo "FAILED: setting notebook kernel metadata"; return 1; }
 import json
 import pathlib
@@ -191,3 +194,4 @@ PY
 #make_workspace "02_NumbersTypesInputConditionals/NumbersTypesInputConditionals_class.ipynb" C02 ALL class
 
 make_workspace "00_CourseLevelDocuments/hello_world.*" ALL ALL class
+make_workspace "00_CourseLevelDocuments/hello_world.*" ALL ALL exam

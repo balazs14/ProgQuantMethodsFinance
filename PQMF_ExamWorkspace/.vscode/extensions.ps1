@@ -42,7 +42,6 @@ $pythonExe = Get-PythonExe
 
 if ($Mode -eq "reset") {
     Remove-Item -Path $markerFile -ErrorAction SilentlyContinue
-    Remove-Item -Path "$markerFile.outside-file" -ErrorAction SilentlyContinue
     
     $pythonCode = @'
 import sys, json
@@ -85,43 +84,10 @@ with open(settings_path, "w") as f:
 function Invoke-Check {
     $pythonCode = @'
 import os, sys, json
-import glob
-import re
-import sqlite3
-from urllib.parse import unquote, urlparse
 
 base_path = sys.argv[1]
 settings_path = sys.argv[2]
 marker_path = sys.argv[3]
-
-def outside_open_file(workspace_root):
-    storage_root = os.path.join(os.environ.get("APPDATA", ""), "Code", "User", "workspaceStorage")
-    workspace_root = os.path.realpath(workspace_root)
-    for storage_dir in glob.glob(os.path.join(storage_root, "*")):
-        workspace_file = os.path.join(storage_dir, "workspace.json")
-        state_file = os.path.join(storage_dir, "state.vscdb")
-        if not os.path.isfile(workspace_file) or not os.path.isfile(state_file):
-            continue
-        try:
-            with open(workspace_file, encoding="utf-8") as file:
-                folder = json.load(file).get("folder", "")
-            if urlparse(folder).scheme == "file":
-                folder = unquote(urlparse(folder).path)
-            if os.path.realpath(folder) != workspace_root:
-                continue
-            connection = sqlite3.connect(state_file)
-            rows = connection.execute("select value from ItemTable where key like 'memento/workbench.editor.%'")
-            for (value,) in rows:
-                text = value if isinstance(value, str) else json.dumps(value)
-                for candidate in re.findall(r"file://([^\"]+)", text):
-                    path = unquote(candidate.replace("\\\\", "\\"))
-                    if path.startswith("/") and not os.path.realpath(path).startswith(workspace_root + os.sep):
-                        connection.close()
-                        return path
-            connection.close()
-        except Exception:
-            continue
-    return None
 
 PINK_COLORS = {
     "statusBar.background": "#ff1493",
@@ -152,15 +118,7 @@ try:
 except Exception:
     base_settings = {}
 
-outside_path = outside_open_file(os.path.dirname(os.path.dirname(base_path)))
-outside_marker_path = marker_path + ".outside-file"
-if outside_path:
-    try:
-        with open(outside_marker_path, "w") as f:
-            f.write(outside_path + "\n")
-    except Exception:
-        pass
-violation_detected = os.path.exists(marker_path) or os.path.exists(outside_marker_path)
+violation_detected = os.path.exists(marker_path)
 
 current_settings = {}
 if os.path.exists(settings_path):
@@ -168,7 +126,11 @@ if os.path.exists(settings_path):
         with open(settings_path) as f:
             current_settings = json.load(f)
     except Exception:
-        pass
+        # settings.json exists but failed to parse - likely VS Code is mid-write.
+        # Skip this cycle rather than treating it as empty, which would cause
+        # us to force-overwrite (and erase) whatever edit is in progress.
+        print("SKIP")
+        sys.exit(0)
 
 if not violation_detected:
     if current_settings.get("chat.disableAIFeatures") is False:
@@ -220,22 +182,31 @@ else:
     return $output.Trim()
 }
 
+function Invoke-CheckLocked {
+    $mutex = New-Object System.Threading.Mutex($false, "PQMFExamExtensionsCheck")
+    $null = $mutex.WaitOne(10000)
+    try {
+        return Invoke-Check
+    }
+    finally {
+        $mutex.ReleaseMutex()
+    }
+}
+
 if ($Mode -eq "watch") {
     Write-Host "Starting AI prevention watcher loop..." -ForegroundColor Cyan
     while ($true) {
-        Invoke-Check | Out-Null
+        Invoke-CheckLocked | Out-Null
         Start-Sleep -Seconds 1
     }
 }
 else {
-    $result = Invoke-Check
+    $result = Invoke-CheckLocked
     if ($result -eq "VIOLATION") {
-        if (Test-Path "$vscodeDir\.ai-extension-detected.outside-file") {
-            Write-Host "⚠️ File outside the exam workspace was opened. Workspace glowing pink until instructor reset task is run." -ForegroundColor Red
-        }
-        else {
-            Write-Host "⚠️ AI usage detected! Workspace glowing pink until instructor reset task is run." -ForegroundColor Red
-        }
+        Write-Host "⚠️ AI usage detected! Workspace glowing pink until instructor reset task is run." -ForegroundColor Red
+    }
+    elseif ($result -eq "SKIP") {
+        Write-Host "… Settings file busy, retry the check in a moment." -ForegroundColor Yellow
     }
     else {
         Write-Host "✓ Workspace settings validated. AI features disabled." -ForegroundColor Green

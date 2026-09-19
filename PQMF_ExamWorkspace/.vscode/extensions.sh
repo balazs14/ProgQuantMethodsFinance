@@ -21,7 +21,6 @@ fi
 
 if [ "$mode" = "--reset" ] || [ "$mode" = "reset" ]; then
     rm -f "$marker_file"
-    rm -f "$marker_file.outside-file"
     "$python_exe" - "$base_settings" "$settings_file" <<'PY'
 import sys, json
 
@@ -58,52 +57,31 @@ PY
     exit 0
 fi
 
+# The "check" task and the "watch" loop both run on folderOpen; serialize their
+# access to settings.json so they can never interleave writes and corrupt it.
+lock_dir="$vscode_dir/.extensions-check.lock"
+with_lock() {
+    tries=0
+    while ! mkdir "$lock_dir" 2>/dev/null; do
+        tries=$((tries + 1))
+        if [ "$tries" -ge 50 ]; then
+            rm -rf "$lock_dir"
+        fi
+        sleep 0.1
+    done
+    "$@"
+    rc=$?
+    rmdir "$lock_dir" 2>/dev/null
+    return $rc
+}
+
 run_check() {
     "$python_exe" - "$base_settings" "$settings_file" "$marker_file" <<'PY'
 import os, sys, json
-import glob
-import re
-import sqlite3
-from urllib.parse import unquote, urlparse
 
 base_path = sys.argv[1]
 settings_path = sys.argv[2]
 marker_path = sys.argv[3]
-
-def outside_open_file(workspace_root):
-    app_data = os.environ.get("APPDATA")
-    if app_data:
-        storage_root = os.path.join(app_data, "Code", "User", "workspaceStorage")
-    else:
-        storage_root = os.path.expanduser("~/Library/Application Support/Code/User/workspaceStorage")
-    workspace_root = os.path.realpath(workspace_root)
-    for storage_dir in glob.glob(os.path.join(storage_root, "*")):
-        workspace_file = os.path.join(storage_dir, "workspace.json")
-        state_file = os.path.join(storage_dir, "state.vscdb")
-        if not os.path.isfile(workspace_file) or not os.path.isfile(state_file):
-            continue
-        try:
-            with open(workspace_file, encoding="utf-8") as file:
-                folder = json.load(file).get("folder", "")
-            if urlparse(folder).scheme == "file":
-                folder = unquote(urlparse(folder).path)
-            if os.path.realpath(folder) != workspace_root:
-                continue
-            connection = sqlite3.connect(state_file)
-            rows = connection.execute(
-                "select value from ItemTable where key like 'memento/workbench.editor.%'"
-            )
-            for (value,) in rows:
-                text = value if isinstance(value, str) else json.dumps(value)
-                for candidate in re.findall(r"file://([^\"]+)", text):
-                    path = unquote(candidate.replace("\\\\", "\\"))
-                    if path.startswith("/") and not os.path.realpath(path).startswith(workspace_root + os.sep):
-                        connection.close()
-                        return path
-            connection.close()
-        except Exception:
-            continue
-    return None
 
 PINK_COLORS = {
     "statusBar.background": "#ff1493",
@@ -134,15 +112,7 @@ try:
 except Exception:
     base_settings = {}
 
-outside_path = outside_open_file(os.path.dirname(os.path.dirname(base_path)))
-outside_marker_path = marker_path + ".outside-file"
-if outside_path:
-    try:
-        with open(outside_marker_path, "w") as f:
-            f.write(outside_path + "\n")
-    except Exception:
-        pass
-violation_detected = os.path.exists(marker_path) or os.path.exists(outside_marker_path)
+violation_detected = os.path.exists(marker_path)
 
 current_settings = {}
 if os.path.exists(settings_path):
@@ -150,7 +120,11 @@ if os.path.exists(settings_path):
         with open(settings_path) as f:
             current_settings = json.load(f)
     except Exception:
-        pass
+        # settings.json exists but failed to parse - likely VS Code is mid-write.
+        # Skip this cycle rather than treating it as empty, which would cause
+        # us to force-overwrite (and erase) whatever edit is in progress.
+        print("SKIP")
+        sys.exit(0)
 
 if not violation_detected:
     if current_settings.get("chat.disableAIFeatures") is False:
@@ -202,17 +176,15 @@ PY
 if [ "$mode" = "--watch" ] || [ "$mode" = "watch" ]; then
     printf "Starting AI prevention watcher loop...\n" >&2
     while true; do
-        run_check >/dev/null 2>&1 || true
+        with_lock run_check >/dev/null 2>&1 || true
         sleep 1
     done
 else
-    res=$(run_check)
+    res=$(with_lock run_check)
     if [ "$res" = "VIOLATION" ]; then
-        if [ -f "$vscode_dir/.ai-extension-detected.outside-file" ]; then
-            printf "⚠️ File outside the exam workspace was opened. Workspace glowing pink until instructor reset task is run.\n" >&2
-        else
-            printf "⚠️ AI usage detected! Workspace glowing pink until instructor reset task is run.\n" >&2
-        fi
+        printf "⚠️ AI usage detected! Workspace glowing pink until instructor reset task is run.\n" >&2
+    elif [ "$res" = "SKIP" ]; then
+        printf "… Settings file busy, retry the check in a moment.\n" >&2
     else
         printf "✓ Workspace settings validated. AI features disabled.\n" >&2
     fi
