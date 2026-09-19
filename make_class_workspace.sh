@@ -94,8 +94,8 @@ function make_workspace() {
     fi
 
     foldername="Workspace_${tag}"
-    launchername="${tag}_launcher.bat"
-    commandname="${tag}_launcher.command"
+    launchername="${tag}_launcher_win.bat"
+    commandname="${tag}_launcher_mac.command"
     workdir=$(mktemp -d)
     tmpzip="$workdir/${tag}.zip"
 
@@ -186,7 +186,8 @@ PY
     echo "    done: ~/Downloads/$launchername and ~/Downloads/$commandname"
 }
 
-make_workspace "01_BasicsVariablesStrings/BasicsVariablesStrings_quiz1.ipynb" C02 G01 exam
-make_workspace "01_BasicsVariablesStrings/BasicsVariablesStrings_quiz2.ipynb" C02 G02 exam
-make_workspace "02_NumbersTypesInputConditionals/NumbersTypesInputConditionals_class.ipynb" C02 ALL class
+#make_workspace "01_BasicsVariablesStrings/BasicsVariablesStrings_quiz1.ipynb" C02 G01 exam
+#make_workspace "01_BasicsVariablesStrings/BasicsVariablesStrings_quiz2.ipynb" C02 G02 exam
+#make_workspace "02_NumbersTypesInputConditionals/NumbersTypesInputConditionals_class.ipynb" C02 ALL class
 
+make_workspace "00_CourseLevelDocuments/hello_world.*" ALL ALL class

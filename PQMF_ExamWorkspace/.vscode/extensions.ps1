@@ -42,6 +42,7 @@ $pythonExe = Get-PythonExe
 
 if ($Mode -eq "reset") {
     Remove-Item -Path $markerFile -ErrorAction SilentlyContinue
+    Remove-Item -Path "$markerFile.outside-file" -ErrorAction SilentlyContinue
     
     $pythonCode = @'
 import sys, json
@@ -84,10 +85,43 @@ with open(settings_path, "w") as f:
 function Invoke-Check {
     $pythonCode = @'
 import os, sys, json
+import glob
+import re
+import sqlite3
+from urllib.parse import unquote, urlparse
 
 base_path = sys.argv[1]
 settings_path = sys.argv[2]
 marker_path = sys.argv[3]
+
+def outside_open_file(workspace_root):
+    storage_root = os.path.join(os.environ.get("APPDATA", ""), "Code", "User", "workspaceStorage")
+    workspace_root = os.path.realpath(workspace_root)
+    for storage_dir in glob.glob(os.path.join(storage_root, "*")):
+        workspace_file = os.path.join(storage_dir, "workspace.json")
+        state_file = os.path.join(storage_dir, "state.vscdb")
+        if not os.path.isfile(workspace_file) or not os.path.isfile(state_file):
+            continue
+        try:
+            with open(workspace_file, encoding="utf-8") as file:
+                folder = json.load(file).get("folder", "")
+            if urlparse(folder).scheme == "file":
+                folder = unquote(urlparse(folder).path)
+            if os.path.realpath(folder) != workspace_root:
+                continue
+            connection = sqlite3.connect(state_file)
+            rows = connection.execute("select value from ItemTable where key like 'memento/workbench.editor.%'")
+            for (value,) in rows:
+                text = value if isinstance(value, str) else json.dumps(value)
+                for candidate in re.findall(r"file://([^\"]+)", text):
+                    path = unquote(candidate.replace("\\\\", "\\"))
+                    if path.startswith("/") and not os.path.realpath(path).startswith(workspace_root + os.sep):
+                        connection.close()
+                        return path
+            connection.close()
+        except Exception:
+            continue
+    return None
 
 PINK_COLORS = {
     "statusBar.background": "#ff1493",
@@ -118,7 +152,15 @@ try:
 except Exception:
     base_settings = {}
 
-violation_detected = os.path.exists(marker_path)
+outside_path = outside_open_file(os.path.dirname(os.path.dirname(base_path)))
+outside_marker_path = marker_path + ".outside-file"
+if outside_path:
+    try:
+        with open(outside_marker_path, "w") as f:
+            f.write(outside_path + "\n")
+    except Exception:
+        pass
+violation_detected = os.path.exists(marker_path) or os.path.exists(outside_marker_path)
 
 current_settings = {}
 if os.path.exists(settings_path):
@@ -188,7 +230,12 @@ if ($Mode -eq "watch") {
 else {
     $result = Invoke-Check
     if ($result -eq "VIOLATION") {
-        Write-Host "⚠️ AI usage detected! Workspace glowing pink until instructor reset task is run." -ForegroundColor Red
+        if (Test-Path "$vscodeDir\.ai-extension-detected.outside-file") {
+            Write-Host "⚠️ File outside the exam workspace was opened. Workspace glowing pink until instructor reset task is run." -ForegroundColor Red
+        }
+        else {
+            Write-Host "⚠️ AI usage detected! Workspace glowing pink until instructor reset task is run." -ForegroundColor Red
+        }
     }
     else {
         Write-Host "✓ Workspace settings validated. AI features disabled." -ForegroundColor Green

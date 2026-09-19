@@ -21,6 +21,7 @@ fi
 
 if [ "$mode" = "--reset" ] || [ "$mode" = "reset" ]; then
     rm -f "$marker_file"
+    rm -f "$marker_file.outside-file"
     "$python_exe" - "$base_settings" "$settings_file" <<'PY'
 import sys, json
 
@@ -60,10 +61,49 @@ fi
 run_check() {
     "$python_exe" - "$base_settings" "$settings_file" "$marker_file" <<'PY'
 import os, sys, json
+import glob
+import re
+import sqlite3
+from urllib.parse import unquote, urlparse
 
 base_path = sys.argv[1]
 settings_path = sys.argv[2]
 marker_path = sys.argv[3]
+
+def outside_open_file(workspace_root):
+    app_data = os.environ.get("APPDATA")
+    if app_data:
+        storage_root = os.path.join(app_data, "Code", "User", "workspaceStorage")
+    else:
+        storage_root = os.path.expanduser("~/Library/Application Support/Code/User/workspaceStorage")
+    workspace_root = os.path.realpath(workspace_root)
+    for storage_dir in glob.glob(os.path.join(storage_root, "*")):
+        workspace_file = os.path.join(storage_dir, "workspace.json")
+        state_file = os.path.join(storage_dir, "state.vscdb")
+        if not os.path.isfile(workspace_file) or not os.path.isfile(state_file):
+            continue
+        try:
+            with open(workspace_file, encoding="utf-8") as file:
+                folder = json.load(file).get("folder", "")
+            if urlparse(folder).scheme == "file":
+                folder = unquote(urlparse(folder).path)
+            if os.path.realpath(folder) != workspace_root:
+                continue
+            connection = sqlite3.connect(state_file)
+            rows = connection.execute(
+                "select value from ItemTable where key like 'memento/workbench.editor.%'"
+            )
+            for (value,) in rows:
+                text = value if isinstance(value, str) else json.dumps(value)
+                for candidate in re.findall(r"file://([^\"]+)", text):
+                    path = unquote(candidate.replace("\\\\", "\\"))
+                    if path.startswith("/") and not os.path.realpath(path).startswith(workspace_root + os.sep):
+                        connection.close()
+                        return path
+            connection.close()
+        except Exception:
+            continue
+    return None
 
 PINK_COLORS = {
     "statusBar.background": "#ff1493",
@@ -94,7 +134,15 @@ try:
 except Exception:
     base_settings = {}
 
-violation_detected = os.path.exists(marker_path)
+outside_path = outside_open_file(os.path.dirname(os.path.dirname(base_path)))
+outside_marker_path = marker_path + ".outside-file"
+if outside_path:
+    try:
+        with open(outside_marker_path, "w") as f:
+            f.write(outside_path + "\n")
+    except Exception:
+        pass
+violation_detected = os.path.exists(marker_path) or os.path.exists(outside_marker_path)
 
 current_settings = {}
 if os.path.exists(settings_path):
@@ -160,7 +208,11 @@ if [ "$mode" = "--watch" ] || [ "$mode" = "watch" ]; then
 else
     res=$(run_check)
     if [ "$res" = "VIOLATION" ]; then
-        printf "⚠️ AI usage detected! Workspace glowing pink until instructor reset task is run.\n" >&2
+        if [ -f "$vscode_dir/.ai-extension-detected.outside-file" ]; then
+            printf "⚠️ File outside the exam workspace was opened. Workspace glowing pink until instructor reset task is run.\n" >&2
+        else
+            printf "⚠️ AI usage detected! Workspace glowing pink until instructor reset task is run.\n" >&2
+        fi
     else
         printf "✓ Workspace settings validated. AI features disabled.\n" >&2
     fi
