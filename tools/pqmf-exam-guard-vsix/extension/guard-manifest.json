@@ -1,16 +1,24 @@
 {
   "files": {
+    ".vscode/guard-reset.py": {
+      "sha256": "fa35e53f8660d54658bd1210485812cfcfbe62eb887600278fe9f0502049f3bb",
+      "mode": 256
+    },
     ".vscode/CROSS_PLATFORM.md": {
-      "sha256": "6a71d1d72da51564c1db91390424377f9b7ba7736ddfd69bbb255d60c22a43ce",
+      "sha256": "720f05de6546e07c404ab7c963cf14fa3dfcd2e636e6fdb9ef03f753cbace6cd",
       "mode": 292
     },
     ".vscode/extensions.sh": {
-      "sha256": "40249af52560c85ebde9570e3eab65875f284bb8f123939b27f53c4f6c209aaf",
-      "mode": 365
+      "sha256": "cf3b83377b823c1469f086037af194293e63a4bed1e6c4eca9a38e55007ce832",
+      "mode": 256
     },
     ".vscode/extensions.ps1": {
-      "sha256": "4f3c8796e316df409bc0095229ed546c92a2a9cdb915b25f95fe39840b7c59c8",
+      "sha256": "1c5fc70d27293718ece5ae8bb8dbc0ac0978ab7f2a62aa67c5784107032af919",
       "mode": 292
+    },
+    ".vscode/guard-check.py": {
+      "sha256": "a8c9367550e5777a7be89e54b7132ec33c2b18d5e9c00d374f3a794a7aae38b6",
+      "mode": 256
     },
     ".vscode/extensions.json": {
       "sha256": "e9da3b8600701440904bb1cb5fbe352ba343bc351809652ce035cb43402b1789",
@@ -21,16 +29,16 @@
       "mode": 292
     },
     ".vscode/terminal-rc.ps1": {
-      "sha256": "c4c7b29f5ac47f65b0bdb213a21ea41f195b2ce1339039c210bb657903f7ffaa",
+      "sha256": "9b96c52bfb186c328ba15d86fdb8a7be8f11df995ddb78f94d358973d620dced",
       "mode": 292
     },
     ".vscode/settings.base.json": {
-      "sha256": "79c2488cede962112b34d675e6137f93e51476df7eba7d75744e7a709a13a709",
+      "sha256": "7c8a6a5a748f6d1bbc3f5af2abc32d78dca86b12be8efcd83f21cdf1cf2561a0",
       "mode": 292
     },
     ".vscode/tasks.json": {
-      "sha256": "ced362377847cc877861e2f5d5899cd441291c6ca0064e0558d6d4bb4ae53880",
-      "mode": 292
+      "sha256": "b90b533268e9660858ccdb3385b3c3f50a3094657f857c7028d4b34d7ec3a633",
+      "mode": 256
     }
   }
 }

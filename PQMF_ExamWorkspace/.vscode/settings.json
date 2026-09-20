@@ -30,7 +30,7 @@
   },
   "terminal.integrated.profiles.windows": {
     "PowerShell (restricted)": {
-      "path": "pwsh",
+      "path": "powershell",
       "args": [
         "-NoProfile",
         "-NoExit",

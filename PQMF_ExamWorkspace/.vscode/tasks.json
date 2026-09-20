@@ -2,37 +2,23 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Restricted mode: check AI extensions",
-      "type": "shell",
-      "command": "${command:workbench.action.terminal.sendSequence}",
-      "windows": {
-        "command": "& '${workspaceFolder}\\.vscode\\extensions.ps1' 'check'"
-      },
-      "osx": {
-        "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\" check"
-      },
-      "linux": {
-        "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\" check"
-      },
-      "runOptions": {
-        "runOn": "folderOpen"
-      },
-      "presentation": {
-        "reveal": "never"
-      },
-      "problemMatcher": []
-    },
-    {
       "label": "Restricted mode: watch AI usage",
-      "type": "shell",
+      "type": "process",
+      "command": "sh",
+      "args": [
+        "${workspaceFolder}/.vscode/extensions.sh",
+        "--watch"
+      ],
       "windows": {
-        "command": "& '${workspaceFolder}\\.vscode\\extensions.ps1' 'watch'"
-      },
-      "osx": {
-        "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\" --watch"
-      },
-      "linux": {
-        "command": "sh \"${workspaceFolder}/.vscode/extensions.sh\" --watch"
+        "command": "powershell.exe",
+        "args": [
+          "-NoProfile",
+          "-ExecutionPolicy",
+          "Bypass",
+          "-File",
+          "${workspaceFolder}\\.vscode\\extensions.ps1",
+          "watch"
+        ]
       },
       "runOptions": {
         "runOn": "folderOpen"
@@ -45,15 +31,23 @@
     },
     {
       "label": "Restricted mode: student terminal",
-      "type": "shell",
+      "type": "process",
+      "command": "bash",
+      "args": [
+        "--rcfile",
+        "${workspaceFolder}/.vscode/terminal-rc.sh",
+        "-i"
+      ],
       "windows": {
-        "command": "pwsh -NoProfile -NoExit -Command \". '${workspaceFolder}\\.vscode\\terminal-rc.ps1'\""
-      },
-      "osx": {
-        "command": "bash --rcfile \"${workspaceFolder}/.vscode/terminal-rc.sh\" -i"
-      },
-      "linux": {
-        "command": "bash --rcfile \"${workspaceFolder}/.vscode/terminal-rc.sh\" -i"
+        "command": "powershell.exe",
+        "args": [
+          "-NoProfile",
+          "-ExecutionPolicy",
+          "Bypass",
+          "-NoExit",
+          "-Command",
+          ". '${workspaceFolder}\\.vscode\\terminal-rc.ps1'"
+        ]
       },
       "runOptions": {
         "runOn": "folderOpen"

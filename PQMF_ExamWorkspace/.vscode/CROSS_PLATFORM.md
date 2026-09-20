@@ -33,7 +33,7 @@ This workspace implements AI feature disabling across **Windows**, **macOS**, an
 
 - Validator script: `.vscode/extensions.ps1` (PowerShell script)
 - Python detection: Checks `$workspace\.venv\Scripts\python.exe`, `$workspace\venv\Scripts\python.exe`, `python` (venv-aware), fallback to `python3`
-- Execution: `pwsh -NoProfile -Command "& '.vscode\extensions.ps1' [check|reset|watch]"`
+- Execution: `powershell -NoProfile -Command "& '.vscode\extensions.ps1' [check|reset|watch]"`
 - Runs on: Folder open, manual task, or watch mode
 
 ## Files Deployed
@@ -78,7 +78,7 @@ This workspace implements AI feature disabling across **Windows**, **macOS**, an
   },
   "terminal.integrated.profiles.windows": {
     "PowerShell (restricted)": {
-      "path": "pwsh",
+      "path": "powershell",
       "args": [
         "-NoProfile",
         "-Command",
